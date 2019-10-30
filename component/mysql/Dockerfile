@@ -1,3 +1,3 @@
 FROM mysql
 
-ADD data/ /docker-entrypoint-initdb.d/
+ADD database/ /docker-entrypoint-initdb.d/
