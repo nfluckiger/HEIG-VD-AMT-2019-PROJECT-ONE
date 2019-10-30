@@ -1,21 +1,21 @@
-version: '1'
+version: '3'
 services:
    wildfly:
-      build: ../componnent/wildfly
+      build: ../component/wildfly
       ports:
          - "9090:8080"
          - "9990:9990"
       links:
          - mysql:db
    mysql:
-      build: ../componnent/mysql
+      build: ../component/mysql
       command: --default-authentication-plugin=mysql_native_password
       environment:
          MYSQL_ROOT_PASSWORD: admin
       ports:
          - "3306:3306"
    phpmyadmin:
-      build: ../componnent/phpmyadmin
+      build: ../component/phpmyadmin
       environment:
          PMA_HOST: mysql
          MYSQL_ROOT_PASSWORD: admin
