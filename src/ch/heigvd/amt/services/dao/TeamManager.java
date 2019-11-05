@@ -3,6 +3,7 @@ package ch.heigvd.amt.services.dao;
 import ch.heigvd.amt.models.Team;
 
 import javax.annotation.Resource;
+import javax.ejb.Stateless;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -73,6 +74,7 @@ public class TeamManager {
     // Update
     public boolean update(long id, String name, String address, String zip, String city){
         boolean success;
+
         try {
             Connection conn = dataSource.getConnection();
 
@@ -98,6 +100,7 @@ public class TeamManager {
     // Delete
     public boolean delete(long id){
         boolean success;
+
         try {
             Connection conn = dataSource.getConnection();
 
