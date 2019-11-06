@@ -1,6 +1,6 @@
 FROM jboss/wildfly:17.0.1.Final
 
-COPY src/amt_project_one.war /opt/jboss/wildfly/standalone/deployments
+COPY src/project_amt_one.war /opt/jboss/wildfly/standalone/deployments
 COPY src/mysql-connector-java-5.1.48-bin.jar /opt/jboss/wildfly/standalone/deployments
 
 RUN /opt/jboss/wildfly/bin/add-user.sh admin admin --silent
