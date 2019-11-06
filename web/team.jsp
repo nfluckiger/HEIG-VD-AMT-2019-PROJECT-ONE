@@ -2,8 +2,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-  <jsp:include page="include.jsp" />
-  <title>Simple Java Web App Demo</title>
+    <jsp:include page="include.jsp" />
+    <title>Simple Java Web App Demo</title>
 </head>
 <body>
 <h1>Hello, I am a Java web app!</h1>
