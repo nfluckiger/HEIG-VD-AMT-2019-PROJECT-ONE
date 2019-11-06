@@ -1,3 +1,4 @@
+USE `officialLeague` ;
 INSERT INTO Team (name,address,zip,city) 
 	VALUES	("Bandits","Promenade Général Guisan 12","1110","Morges"),
 			("Centurions","Chemin de la Perroude 1","1196","Gland"),
