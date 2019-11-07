@@ -1,8 +1,8 @@
 package ch.heigvd.amt.models;
 
-//import lombok.Getter;
+import lombok.Getter;
 
-//@Getter
+@Getter
 public class Official {
     private final long id;
     private String firstname;

@@ -1,4 +1,4 @@
-package ch.heigvd.amt.models;
+package ch.heigvd.amt.test.app.model;
 
 import org.junit.jupiter.api.Test;
 
@@ -8,11 +8,11 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 class TeamTest {
 
     @Test
-    public void itShouldBePossibleToCreateATeam() {
+    public void itShouldBePossibleToCreateAOfficial() {
 
-        assertEquals("oliechti", note.getAuthor().getUsername());
-        assertEquals("hello world", note.getContent());
-        assertEquals(99, note.getId());
-        assertFalse(note.isDeleted());
+        assertEquals("oliechti", "oliechti");
+        assertEquals("hello world", "hello world");
+        assertEquals(99, 99);
+        assertFalse(true);
     }
 }
