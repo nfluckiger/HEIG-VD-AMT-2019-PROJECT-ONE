@@ -14,7 +14,7 @@ import java.io.IOException;
 public class GameServlet extends HttpServlet {
 
     @EJB
-    GameManager gameManager;
+    private GameManager gameManager;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

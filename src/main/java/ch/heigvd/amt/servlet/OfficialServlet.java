@@ -14,7 +14,7 @@ import java.io.IOException;
 public class OfficialServlet extends HttpServlet {
 
     @EJB
-    OfficialManager officialManager;
+    private OfficialManager officialManager;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -4,12 +4,20 @@
 <html>
 <head>
     <title>Simple Java Web App Demo</title>
+    <base href="${ pageContext.request.contextPath }/" />
+    <link rel="stylesheet" media="screen" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
+    <link rel="stylesheet" href="../../res/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../res/assets/css/font-awesome.min.css">
+
+    <!-- Custom styles for our template -->
+    <link rel="stylesheet" href="../../res/assets/css/bootstrap-theme.css" media="screen" >
+    <link rel="stylesheet" href="../../res/assets/css/main.css">
 </head>
 <body>
 <h1>Officials</h1>
-<ul>
+<ul class="list-group">
     <c:forEach items="${ requestScope.officials }" var="official">
-        <li><c:out value="${ official.firstname } ${ official.lastname }" /></li>
+        <li class="list-group-item"><c:out value="${ official.firstname } ${ official.lastname }" /></li>
     </c:forEach>
 </ul>
 </body>

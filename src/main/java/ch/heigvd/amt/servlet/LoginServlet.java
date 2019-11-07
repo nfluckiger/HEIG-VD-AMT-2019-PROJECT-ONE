@@ -17,7 +17,7 @@ import java.io.IOException;
 public class LoginServlet extends HttpServlet {
 
     @EJB
-    OfficialManager officialUser;
+    private OfficialManager officialUser;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -26,7 +26,7 @@ public class LoginServlet extends HttpServlet {
 //
 //        if(action.equals("login")) {
 
-            req.getRequestDispatcher("/WEB-INF/views/admin.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(req, resp);
 //        }
 //        else if(action.equals("logout")){
 //

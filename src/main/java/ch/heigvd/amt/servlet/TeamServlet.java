@@ -14,7 +14,7 @@ import java.io.IOException;
 public class TeamServlet extends HttpServlet {
 
     @EJB
-    TeamManager teamManager;
+    private TeamManager teamManager;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
