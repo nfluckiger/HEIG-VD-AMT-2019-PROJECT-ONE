@@ -1,7 +1,7 @@
 package ch.heigvd.amt.servlet;
 
 import ch.heigvd.amt.models.Official;
-import ch.heigvd.amt.services.dao.OfficialManager;
+import ch.heigvd.amt.services.dao.OfficialManagerLocal;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -17,7 +17,7 @@ import java.io.IOException;
 public class LoginServlet extends HttpServlet {
 
     @EJB
-    private OfficialManager officialUser;
+    private OfficialManagerLocal officialUser;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -16,7 +16,7 @@ import java.util.List;
 // TODO : TESTER AVEC statement.executeUpdate
 
 @Stateless
-public class TeamManager {
+public class TeamManager implements TeamManagerLocal {
 
     @Resource(lookup = "java:/jdbc/officialLeague")
     private DataSource dataSource;

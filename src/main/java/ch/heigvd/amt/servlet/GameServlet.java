@@ -1,6 +1,6 @@
 package ch.heigvd.amt.servlet;
 
-import ch.heigvd.amt.services.dao.GameManager;
+import ch.heigvd.amt.services.dao.GameManagerLocal;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -14,7 +14,7 @@ import java.io.IOException;
 public class GameServlet extends HttpServlet {
 
     @EJB
-    private GameManager gameManager;
+    private GameManagerLocal gameManager;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

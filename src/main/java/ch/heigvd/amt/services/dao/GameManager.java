@@ -14,16 +14,16 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Stateless
-public class GameManager {
+public class GameManager implements GameManagerLocal {
 
     @Resource(lookup = "java:/jdbc/officialLeague")
     private DataSource dataSource;
 
     @EJB
-    OfficialManager officialManager;
+    OfficialManagerLocal officialManager;
 
     @EJB
-    TeamManager teamManager;
+    TeamManagerLocal teamManager;
 
     // Create
     public boolean create(Game game){

@@ -1,6 +1,6 @@
 package ch.heigvd.amt.servlet;
 
-import ch.heigvd.amt.services.dao.TeamManager;
+import ch.heigvd.amt.services.dao.TeamManagerLocal;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -14,7 +14,7 @@ import java.io.IOException;
 public class TeamServlet extends HttpServlet {
 
     @EJB
-    private TeamManager teamManager;
+    private TeamManagerLocal teamManager;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

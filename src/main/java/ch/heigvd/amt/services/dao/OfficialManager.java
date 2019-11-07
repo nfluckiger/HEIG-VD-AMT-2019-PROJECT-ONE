@@ -14,13 +14,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Stateless
-public class OfficialManager {
+public class OfficialManager implements OfficialManagerLocal {
 
     @Resource(lookup = "java:/jdbc/officialLeague")
     private DataSource dataSource;
 
     @EJB
-    TeamManager teamManager;
+    TeamManagerLocal teamManager;
 
     // Create
     public boolean create(Official official){
