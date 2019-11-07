@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <style type="text/css">
         <%@include file="../../bootstrap/css/bootstrap.css" %>
-        <%@include file="bootstrap/css/bootstrap-theme.css" %>
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="bootstrap/js/jquery.js"></script>

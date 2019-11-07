@@ -1,5 +1,6 @@
 package ch.heigvd.amt.services.dao;
 
+import ch.heigvd.amt.models.Game;
 import ch.heigvd.amt.models.Team;
 
 import javax.annotation.Resource;
@@ -9,6 +10,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 // TODO : TESTER AVEC statement.executeUpdate
 
@@ -125,5 +128,30 @@ public class TeamManager {
         }
 
         return success;
+    }
+
+    public List<Team> getAll(){
+        List<Team> teams = new ArrayList<>();
+
+        try {
+            Connection conn = dataSource.getConnection();
+
+            PreparedStatement statement = conn.prepareStatement("SELECT * FROM Team");
+            ResultSet result = statement.executeQuery();
+
+            while(result.next()){
+                teams.add(new Team(result.getInt("id"),
+                                   result.getString("name"),
+                                   result.getString("address"),
+                                   result.getString("zip"),
+                                   result.getString("city")));
+            }
+
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return teams;
     }
 }

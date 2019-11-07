@@ -10,6 +10,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Stateless
 public class OfficialManager {
@@ -19,7 +21,6 @@ public class OfficialManager {
 
     @EJB
     TeamManager teamManager;
-
 
     // Create
     public boolean create(Official official){
@@ -164,5 +165,32 @@ public class OfficialManager {
             System.out.println(ex);
         }
         return user;
+    }
+
+    public List<Official> getAll(){
+        List<Official> officials = new ArrayList<>();
+
+        try {
+            Connection conn = dataSource.getConnection();
+
+            PreparedStatement statement = conn.prepareStatement("SELECT * FROM Official");
+            ResultSet result = statement.executeQuery();
+
+            while(result.next()){
+                officials.add(new Official(result.getInt("id"),
+                                           result.getString("firstname"),
+                                           result.getString("lastname"),
+                                           result.getString("email"),
+                                           result.getString("password"),
+                                           result.getInt("level"),
+                                           teamManager.get(result.getInt("idTeam"))));
+            }
+
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return officials;
     }
 }

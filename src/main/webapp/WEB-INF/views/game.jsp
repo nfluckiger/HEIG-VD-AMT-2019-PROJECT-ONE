@@ -3,11 +3,14 @@
 
 <html>
 <head>
-    <jsp:include page="include.jsp" />
     <title>Simple Java Web App Demo</title>
 </head>
 <body>
-<h1>Hello, I am a Java web app!</h1>
-<p>I am running from a WAR artifact.</p>
+<h1>Games</h1>
+<ul>
+    <c:forEach items="${ requestScope.games }" var="game">
+        <li><c:out value="${ game.away.name } @ ${ game.home.name }" /></li>
+    </c:forEach>
+</ul>
 </body>
 </html>

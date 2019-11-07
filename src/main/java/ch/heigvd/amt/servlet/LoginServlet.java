@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 
-@WebServlet(name = "LoginServlet", urlPatterns = { "/*" })
+@WebServlet(name = "LoginServlet", urlPatterns = { "/login" })
 public class LoginServlet extends HttpServlet {
 
     @EJB
@@ -26,7 +26,7 @@ public class LoginServlet extends HttpServlet {
 //
 //        if(action.equals("login")) {
 
-            req.getRequestDispatcher("/WEB-INF/login.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/views/admin.jsp").forward(req, resp);
 //        }
 //        else if(action.equals("logout")){
 //
