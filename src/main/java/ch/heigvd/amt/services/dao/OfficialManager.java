@@ -21,8 +21,11 @@ public class OfficialManager {
     TeamManager teamManager;
 
 
-    // Create => TODO : Passer la Team au lieu de teamId (meme chose pour l'update et le delete) ?
-    public boolean create(String firstname, String lastname, String email, String password, int level, long teamId){
+    // Create
+    public boolean create(Official official){
+        if(official == null)
+            return false;
+
         boolean success;
 
         try {
@@ -30,12 +33,12 @@ public class OfficialManager {
 
             PreparedStatement statement = conn.prepareStatement("INSERT INTO Official (firstname, lastname, email, password, level, idTeam) " +
                                                                 "VALUES (?, ?, ?, ?, ?, ?)");
-            statement.setObject(1, firstname);
-            statement.setObject(2, lastname);
-            statement.setObject(3, email);
-            statement.setObject(4, password);
-            statement.setObject(5, level);
-            statement.setObject(6, teamId);
+            statement.setObject(1, official.getFirstname());
+            statement.setObject(2, official.getLastname());
+            statement.setObject(3, official.getEmail());
+            statement.setObject(4, official.getPassword());
+            statement.setObject(5, official.getLevel());
+            statement.setObject(6, official.getTeam().getId());
 
             success = statement.execute();
 
@@ -49,7 +52,7 @@ public class OfficialManager {
     }
 
     // Read
-    public Official getOfficial(long id){
+    public Official get(long id){
         Official official = null;
 
         try {
@@ -79,7 +82,10 @@ public class OfficialManager {
     }
 
     // Update
-    public boolean update(long id, String firstname, String lastname, String email, String password, int level, long teamId){
+    public boolean update(Official official){
+        if(official == null)
+            return false;
+
         boolean success;
 
         try {
@@ -87,13 +93,13 @@ public class OfficialManager {
 
             PreparedStatement statement = conn.prepareStatement("UPDATE Official SET firstname=?, lastname=?, email=?, password=?, level=?, teamId=? " +
                                                                 "WHERE id=?");
-            statement.setObject(1, firstname);
-            statement.setObject(2, lastname);
-            statement.setObject(3, email);
-            statement.setObject(4, password);
-            statement.setObject(5, level);
-            statement.setObject(6, teamId);
-            statement.setObject(7, id);
+            statement.setObject(1, official.getFirstname());
+            statement.setObject(2, official.getLastname());
+            statement.setObject(3, official.getEmail());
+            statement.setObject(4, official.getPassword());
+            statement.setObject(5, official.getLevel());
+            statement.setObject(6, official.getTeam().getId());
+            statement.setObject(7, official.getId());
 
             success = statement.execute();
 
@@ -107,14 +113,17 @@ public class OfficialManager {
     }
 
     // Delete
-    public boolean delete(long id){
+    public boolean delete(Official official){
+        if(official == null)
+            return false;
+
         boolean success;
 
         try {
             Connection conn = dataSource.getConnection();
 
             PreparedStatement statement = conn.prepareStatement("DELETE FROM Official WHERE id=?");
-            statement.setObject(1, id);
+            statement.setObject(1, official.getId());
 
             success = statement.execute();
 

@@ -19,7 +19,10 @@ public class TeamManager {
     private DataSource dataSource;
 
     // Create
-    public boolean create(String name, String address, String zip, String city){
+    public boolean create(Team team){
+        if(team == null)
+            return false;
+
         boolean success;
 
         try {
@@ -27,10 +30,10 @@ public class TeamManager {
 
             PreparedStatement statement = conn.prepareStatement("INSERT INTO Team (name, address, zip, city)" +
                                                                 "VALUES (?, ?, ?, ?)");
-            statement.setObject(1, name);
-            statement.setObject(2, address);
-            statement.setObject(3, zip);
-            statement.setObject(4, city);
+            statement.setObject(1, team.getName());
+            statement.setObject(2, team.getAddress());
+            statement.setObject(3, team.getZip());
+            statement.setObject(4, team.getCity());
 
             success = statement.execute();
 
@@ -72,7 +75,10 @@ public class TeamManager {
     }
 
     // Update
-    public boolean update(long id, String name, String address, String zip, String city){
+    public boolean update(Team team){
+        if(team == null)
+            return false;
+
         boolean success;
 
         try {
@@ -80,11 +86,11 @@ public class TeamManager {
 
             PreparedStatement statement = conn.prepareStatement("UPDATE Team SET name=?, address=?, zip=?, city=? " +
                                                                 "WHERE id=?");
-            statement.setObject(1, name);
-            statement.setObject(2, address);
-            statement.setObject(3, zip);
-            statement.setObject(4, city);
-            statement.setObject(5, id);
+            statement.setObject(1, team.getName());
+            statement.setObject(2, team.getAddress());
+            statement.setObject(3, team.getZip());
+            statement.setObject(4, team.getCity());
+            statement.setObject(5, team.getId());
 
             success = statement.execute();
 
@@ -98,14 +104,17 @@ public class TeamManager {
     }
 
     // Delete
-    public boolean delete(long id){
+    public boolean delete(Team team){
+        if(team == null)
+            return false;
+
         boolean success;
 
         try {
             Connection conn = dataSource.getConnection();
 
             PreparedStatement statement = conn.prepareStatement("DELETE FROM Team WHERE id=?");
-            statement.setObject(1, id);
+            statement.setObject(1, team.getId());
 
             success = statement.execute();
 
