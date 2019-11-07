@@ -1,19 +1,18 @@
 package ch.heigvd.amt.services.dao;
 
 import ch.heigvd.amt.models.Game;
-import ch.heigvd.amt.models.Official;
 
 import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.sql.DataSource;
-import javax.swing.text.DateFormatter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 @Stateless
 public class GameManager {
@@ -151,6 +150,36 @@ public class GameManager {
         }
 
         return success;
+    }
 
+    public List<Game> getAll(){
+        List<Game> games = new ArrayList<>();
+
+        try {
+            Connection conn = dataSource.getConnection();
+
+            PreparedStatement statement = conn.prepareStatement("SELECT * FROM Game");
+            ResultSet result = statement.executeQuery();
+
+            while(result.next()){
+                games.add(new Game(result.getInt("id"),
+                                   result.getTimestamp("timestamp").toLocalDateTime(),
+                                   teamManager.getTeam(result.getInt("idTeamAway")),
+                                   teamManager.getTeam(result.getInt("idTeamHome")),
+                                   officialManager.getOfficial(result.getInt("idReferee")),
+                                   officialManager.getOfficial(result.getInt("idUmpire")),
+                                   officialManager.getOfficial(result.getInt("idChainJudge")),
+                                   officialManager.getOfficial(result.getInt("idLineJudge")),
+                                   officialManager.getOfficial(result.getInt("idBackJudge")),
+                                   officialManager.getOfficial(result.getInt("idSideJudge")),
+                                   officialManager.getOfficial(result.getInt("idFieldJudge"))));
+            }
+
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return games;
     }
 }
