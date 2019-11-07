@@ -67,7 +67,7 @@ public class OfficialManager {
                                         result.getString("email"),
                                         result.getString("password"),
                                         result.getInt("level"),
-                                        teamManager.getTeam(result.getInt("idTeam")));
+                                        teamManager.get(result.getInt("idTeam")));
             }
 
             conn.close();
@@ -127,7 +127,6 @@ public class OfficialManager {
         return success;
     }
 
-    @Override
     public Official connect(String email, String password) {
 
         Official user = null;
@@ -145,15 +144,15 @@ public class OfficialManager {
                 String date = rs.getString("date");
                 String emailUser = rs.getString("email");
                 String passwordUser = rs.getString("password");
-                String level = rs.getString("level");
-                String team = rs.getString("team");
+                int level = rs.getInt("level");
+                int team = rs.getInt("idTeam");
 
-                user = newOfficial(id, firstname, lastname, emailUser, password, level, Team team);
+                user = new Official(id, firstname, lastname, emailUser, password, level, teamManager.get(team));
             }
             connection.close();
         }catch (SQLException ex){
 
-            LOG.log(Level.SEVERE, null, ex);
+            System.out.println(ex);
         }
         return user;
     }

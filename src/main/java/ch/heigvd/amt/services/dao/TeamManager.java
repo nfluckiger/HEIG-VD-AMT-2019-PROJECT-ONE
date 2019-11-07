@@ -44,7 +44,7 @@ public class TeamManager {
     }
 
     // Read
-    public Team getTeam(long id){
+    public Team get(long id){
         Team team = null;
 
         try {

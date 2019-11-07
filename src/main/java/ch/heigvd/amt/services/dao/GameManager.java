@@ -75,8 +75,8 @@ public class GameManager {
             if(result.next()){
                 game = new Game(id,
                                 result.getTimestamp("timestamp").toLocalDateTime(),
-                                teamManager.getTeam(result.getInt("idTeamAway")),
-                                teamManager.getTeam(result.getInt("idTeamHome")),
+                                teamManager.get(result.getInt("idTeamAway")),
+                                teamManager.get(result.getInt("idTeamHome")),
                                 officialManager.getOfficial(result.getInt("idReferee")),
                                 officialManager.getOfficial(result.getInt("idUmpire")),
                                 officialManager.getOfficial(result.getInt("idChainJudge")),
@@ -164,8 +164,8 @@ public class GameManager {
             while(result.next()){
                 games.add(new Game(result.getInt("id"),
                                    result.getTimestamp("timestamp").toLocalDateTime(),
-                                   teamManager.getTeam(result.getInt("idTeamAway")),
-                                   teamManager.getTeam(result.getInt("idTeamHome")),
+                                   teamManager.get(result.getInt("idTeamAway")),
+                                   teamManager.get(result.getInt("idTeamHome")),
                                    officialManager.getOfficial(result.getInt("idReferee")),
                                    officialManager.getOfficial(result.getInt("idUmpire")),
                                    officialManager.getOfficial(result.getInt("idChainJudge")),
