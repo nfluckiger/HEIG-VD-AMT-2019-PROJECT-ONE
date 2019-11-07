@@ -157,9 +157,9 @@
                         <password>sa</password>
                     </security>
                 </datasource>
-        
-               <datasource jndi-name="java:/jdbc/officialLeague" pool-name="officialLeagueDS">
-                    <connection-url>jdbc:mysql://db:3306/officialLeague</connection-url>
+
+                <datasource jndi-name="java:/jdbc/officialLeague" pool-name="officialLeagueDS" enabled="true" use-ccm="true">
+                    <connection-url>jdbc:mysql://db:3306/officialLeague?useSSL=false</connection-url>
                     <driver-class>com.mysql.jdbc.Driver</driver-class>
                     <driver>mysql-connector-java-5.1.48-bin.jar_com.mysql.jdbc.Driver_5_1</driver>
                     <security>
@@ -172,7 +172,7 @@
                         <exception-sorter class-name="org.jboss.jca.adapters.jdbc.extensions.mysql.MySQLExceptionSorter"/>
                     </validation>
                 </datasource>
-                
+
                 <drivers>
                     <driver name="h2" module="com.h2database.h2">
                         <xa-datasource-class>org.h2.jdbcx.JdbcDataSource</xa-datasource-class>
