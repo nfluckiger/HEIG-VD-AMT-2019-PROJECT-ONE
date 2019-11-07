@@ -126,4 +126,35 @@ public class OfficialManager {
 
         return success;
     }
+
+    @Override
+    public Official connect(String email, String password) {
+
+        Official user = null;
+
+        try{
+            Connection connection = dataSource.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM user WHERE email=? AND password=?");
+            pstmt.setObject(1, email);
+            pstmt.setObject(2, password);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()){
+                long id = rs.getLong("id");
+                String firstname = rs.getString("firstname");
+                String lastname = rs.getString("lastname");
+                String date = rs.getString("date");
+                String emailUser = rs.getString("email");
+                String passwordUser = rs.getString("password");
+                String level = rs.getString("level");
+                String team = rs.getString("team");
+
+                user = newOfficial(id, firstname, lastname, emailUser, password, level, Team team);
+            }
+            connection.close();
+        }catch (SQLException ex){
+
+            LOG.log(Level.SEVERE, null, ex);
+        }
+        return user;
+    }
 }
