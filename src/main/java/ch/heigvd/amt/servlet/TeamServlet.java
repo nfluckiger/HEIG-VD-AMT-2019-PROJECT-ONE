@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "TeamServlet", urlPatterns = "/teams")
+@WebServlet(name = "TeamServlet", urlPatterns = { "/teams" })
 public class TeamServlet extends HttpServlet {
 
     @Override

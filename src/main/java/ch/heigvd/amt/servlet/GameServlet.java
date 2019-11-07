@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "GameServlet", urlPatterns = "/games")
+@WebServlet(name = "GameServlet", urlPatterns = { "/games" })
 public class GameServlet extends HttpServlet {
 
     @EJB
