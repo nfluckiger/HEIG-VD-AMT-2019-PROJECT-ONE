@@ -1,10 +1,10 @@
 package ch.heigvd.amt.models;
 
-//import lombok.Getter;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 
-//@Getter
+@Getter
 public class Game {
     private final long id;
     private LocalDateTime timestamp;
