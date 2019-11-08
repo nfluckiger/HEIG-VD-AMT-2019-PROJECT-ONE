@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "OfficialServlet", urlPatterns = { "/home" })
+@WebServlet(name = "HomeServlet", urlPatterns = { "/home" })
 public class HomeServlet extends HttpServlet {
 
     @EJB
@@ -22,7 +22,7 @@ public class HomeServlet extends HttpServlet {
     TeamManagerLocal teamManager;
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/pages/home.jsp").forward(req, resp);
     }
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

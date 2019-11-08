@@ -1,10 +1,3 @@
-<%--<html>--%>
-<%--<body>--%>
-<%--<h2>Hello Worlasdsadsdasdsadasdsd!</h2>--%>
-<%----%>
-<%--<a href="${pageContext.request.contextPath}/login">test</a>--%>
-<%--</body>--%>
-<%--</html>--%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,22 +6,22 @@
     <meta name="description" content="">
     <meta name="author"      content="Sergey Pozhilov (GetTemplate.com)">
 
-    <title>Sign in | Official League</title>
+    <title>Official League</title>
 
-    <link rel="shortcut icon" href="res/assets/images/gt_favicon.png">
+    <link rel="shortcut icon" href="assets/images/gt_favicon.png">
 
     <link rel="stylesheet" media="screen" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
-    <link rel="stylesheet" href="res/assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="res/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
 
     <!-- Custom styles for our template -->
-    <link rel="stylesheet" href="res/assets/css/bootstrap-theme.css" media="screen" >
-    <link rel="stylesheet" href="res/assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/bootstrap-theme.css" media="screen" >
+    <link rel="stylesheet" href="assets/css/main.css">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-    <script src="res/assets/js/html5shiv.js"></script>
-    <script src="res/assets/js/respond.min.js"></script>
+    <script src="assets/js/html5shiv.js"></script>
+    <script src="assets/js/respond.min.js"></script>
     <![endif]-->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 </head>
@@ -40,7 +33,7 @@
         <div class="navbar-header">
             <!-- Button for smallest screens -->
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"><span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-            <a class="navbar-brand" href="${ pageContext.request.contextPath }/"><img src="res/assets/images/logo.png" alt="Progressus HTML5 template"></a>
+            <a class="navbar-brand" href="${ pageContext.request.contextPath }/"><img src="assets/images/logo.png" alt="Progressus HTML5 template"></a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav pull-right">
@@ -124,8 +117,8 @@
 <!-- JavaScript libs are placed at the end of the document so the pages load faster -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-<script src="res/assets/js/headroom.min.js"></script>
-<script src="res/assets/js/jQuery.headroom.min.js"></script>
-<script src="res/assets/js/template.js"></script>
+<script src="assets/js/headroom.min.js"></script>
+<script src="assets/js/jQuery.headroom.min.js"></script>
+<script src="assets/js/template.js"></script>
 </body>
 </html>

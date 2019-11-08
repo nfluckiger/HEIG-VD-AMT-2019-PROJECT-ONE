@@ -33,7 +33,7 @@ public class GameServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("games", gameManager.getAll());
-        req.getRequestDispatcher("WEB-INF/views/game.jsp").forward(req, resp);
+        req.getRequestDispatcher("WEB-INF/pages/game.jsp").forward(req, resp);
     }
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

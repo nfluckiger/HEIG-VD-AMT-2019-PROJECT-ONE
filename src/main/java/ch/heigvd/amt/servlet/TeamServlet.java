@@ -20,7 +20,7 @@ public class TeamServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("teams", teamManager.getAll());
-        req.getRequestDispatcher("WEB-INF/views/team.jsp").forward(req, resp);
+        req.getRequestDispatcher("WEB-INF/pages/team.jsp").forward(req, resp);
     }
 
     @Override

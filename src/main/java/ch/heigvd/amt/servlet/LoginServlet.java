@@ -29,7 +29,7 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(req, resp);
     }
 
     @Override
@@ -54,7 +54,7 @@ public class LoginServlet extends HttpServlet {
 //                resp.sendRedirect(req.getContextPath() + "/home");
 //            } else {
 //                req.getSession().removeAttribute("user");
-//                req.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(req, resp);
+//                req.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(req, resp);
 //            }
             System.out.println("login");
         } else if (action.equals("register")) {
