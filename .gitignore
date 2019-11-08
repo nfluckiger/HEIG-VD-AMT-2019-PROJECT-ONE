@@ -13,9 +13,17 @@
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
-
 # Generated files
 .idea/**/contentModel.xml
+
+# TEMP
+.idea/HEIG-VD-AMT-2019-PROJECT-ONE.iml
+.idea/compiler.xml
+.idea/misc.xml
+
+component/
+.directory
+
 
 # Sensitive or high-churn files
 .idea/**/dataSources/
