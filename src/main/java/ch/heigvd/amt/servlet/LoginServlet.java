@@ -28,9 +28,9 @@ public class LoginServlet extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String action = req.getParameter("action");
-        HttpSession session = req.getSession();
-        Official user = null;
-        resp.setContentType("text/html;charset=UTF-8");
+//        HttpSession session = req.getSession();
+//        Official user = null;
+//        resp.setContentType("text/html;charset=UTF-8");
 
         if(action.equals("login")) {
 
@@ -39,16 +39,20 @@ public class LoginServlet extends HttpServlet {
 
             //Todo Passe word en clair
 
-            user = officialUser.connect(email, password);
-
-            if (user != null) {
-                session.setAttribute("user", user);
-                resp.sendRedirect(req.getContextPath() + "/home");
-            } else {
-                req.getSession().removeAttribute("user");
-                req.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(req, resp);
-            }
+//            user = officialUser.connect(email, password);
+//
+//            if (user != null) {
+//                session.setAttribute("user", user);
+//                resp.sendRedirect(req.getContextPath() + "/home");
+//            } else {
+//                req.getSession().removeAttribute("user");
+//                req.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(req, resp);
+//            }
+            System.out.println("login");
+        } else if (action.equals("register")) {
+            System.out.println("Register");
         }
 
+        resp.sendRedirect("home");
     }
 }

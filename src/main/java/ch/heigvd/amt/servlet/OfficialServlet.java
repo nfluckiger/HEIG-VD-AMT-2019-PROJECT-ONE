@@ -19,6 +19,8 @@ public class OfficialServlet extends HttpServlet {
 
     @EJB
     private OfficialManagerLocal officialManager;
+
+    @EJB
     private TeamManagerLocal teamManager;
 
     @Override
@@ -28,29 +30,25 @@ public class OfficialServlet extends HttpServlet {
     }
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int creationId = 25;
-        String action = req.getParameter("action");
-        HttpSession session = req.getSession();
-        Official user = (Official) session.getAttribute("user");
-        resp.setContentType("text/html;charset=UTF-8");
+        if(req.getParameter("action").equals("register")) {
+            officialManager.create(new Official(req.getParameter("firstname"),
+                    req.getParameter("lastname"),
+                    req.getParameter("email"),
+                    req.getParameter("password"),
+                    1,                              // New officials start at level 1
+                    teamManager.get(Integer.parseInt(req.getParameter("team")))));
 
-        if(user.getLevel() == 3){
-            if(action.equals("create")) {
-                String firstname = req.getParameter("firstname");
-                String lastname = req.getParameter("lastname");
-                String email = req.getParameter("email");
-                String password = req.getParameter("password");
-                int level = Integer.parseInt(req.getParameter("level"));
-                Team team = teamManager.get(Integer.parseInt(req.getParameter("team")));
-
-                Official newOfficial = new Official(creationId, firstname, lastname, email, password, level, team);
-                officialManager.create(newOfficial);
-
-            }
-        }else{
-
-            System.out.println("Unauthorized access request");
-
+            resp.sendRedirect("/home");
         }
+//        HttpSession session = req.getSession();
+//        Official user = (Official) session.getAttribute("user");
+//
+//        if(user.getLevel() == 3){
+
+//        }else{
+//
+//            System.out.println("Unauthorized access request");
+//
+//        }
     }
 }
