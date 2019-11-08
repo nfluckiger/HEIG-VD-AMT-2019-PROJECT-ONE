@@ -20,6 +20,7 @@ public class OfficialServlet extends HttpServlet {
 
     @EJB
     private OfficialManagerLocal officialManager;
+
     @EJB
     private TeamManagerLocal teamManager;
 
@@ -45,13 +46,12 @@ public class OfficialServlet extends HttpServlet {
                 Team team = teamManager.get(Integer.parseInt(req.getParameter("team")));
                 password = PasswordHashing.hashPassword(password);
                 Official newOfficial = new Official(firstname, lastname, email, password, level, team);
-                officialManager.create(newOfficial);
 
+                officialManager.create(newOfficial);
             }
         }else{
-
             System.out.println("Unauthorized access request");
-
         }
+
     }
 }

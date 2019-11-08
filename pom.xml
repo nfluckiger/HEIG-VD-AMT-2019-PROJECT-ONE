@@ -104,6 +104,12 @@
       <version>${version.arquillian.chameleon}</version>
       <scope>test</scope>
     </dependency>
+      <dependency>
+          <groupId>com.google.guava</groupId>
+          <artifactId>guava</artifactId>
+          <version>18.0</version>
+          <scope>compile</scope>
+      </dependency>
   </dependencies>
 
   <build>

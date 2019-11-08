@@ -15,17 +15,11 @@ public class Official {
     private Team team;
 
     public Official(long id, String firstname, String lastname, String email, String password, int level, Team team){
+        this(firstname, lastname, email, password, level, team);
         this.id = id;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.email = email;
-        this.password = password;
-        this.level = level;
-        this.team = team;
     }
 
     public Official(String firstname, String lastname, String email, String password, int level, Team team){
-
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;

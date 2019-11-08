@@ -13,11 +13,8 @@ public class Team {
     private String city;
 
     public Team(long id, String name, String address, String zip, String city){
+        this(name, address, zip, city);
         this.id = id;
-        this.name = name;
-        this.address = address;
-        this.zip = zip;
-        this.city = city;
     }
 
     public Team(String name, String address, String zip, String city){

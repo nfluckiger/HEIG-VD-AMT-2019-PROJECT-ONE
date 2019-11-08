@@ -25,12 +25,10 @@ public class TeamServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        boolean result = teamManager.create(new Team(req.getParameter("name"),
-                                                     req.getParameter("address"),
-                                                     req.getParameter("zip"),
-                                                     req.getParameter("city")));
-
-        req.setAttribute("result", result);
+        teamManager.create(new Team(req.getParameter("name"),
+                                    req.getParameter("address"),
+                                    req.getParameter("zip"),
+                                    req.getParameter("city")));
         doGet(req, resp);
     }
 }

@@ -3,7 +3,6 @@
 
 <html>
 <head>
-    <jsp:include page="include.jsp" />
     <title>Simple Java Web App Demo</title>
 </head>
 <body>

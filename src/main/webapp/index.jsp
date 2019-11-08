@@ -30,6 +30,7 @@
     <script src="res/assets/js/html5shiv.js"></script>
     <script src="res/assets/js/respond.min.js"></script>
     <![endif]-->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -60,15 +61,14 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <h3 class="thin text-center">Sign in to your account</h3>
-                        <p class="text-center text-muted">If you don't have an account, you can sign up <a href="signup.html">here</a></p>
                         <hr>
 
-                        <form>
-                            <div class="top-margin">
+                        <form method="post" action="./login?action=login">
+                            <div id="emailField" class="top-margin">
                                 <label>Email <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control">
                             </div>
-                            <div class="top-margin">
+                            <div id="passField" class="top-margin">
                                 <label>Password <span class="text-danger">*</span></label>
                                 <input type="password" class="form-control">
                             </div>
@@ -77,7 +77,10 @@
 
                             <div class="row">
                                 <div class="col-lg-4">
-                                    <button class="btn btn-action" type="submit">Sign in</button>
+                                    <button class="btn btn-action" id="signUp" type="button">Sign up</button>
+                                </div>
+                                <div class="col-lg-4">
+                                    <button class="btn btn-action" id="submit" type="submit">Sign in</button>
                                 </div>
                             </div>
                         </form>
@@ -89,6 +92,35 @@
 </div>
 
 
+<script type="text/javascript">
+    $("#signUp").click(() => {
+        $("#passField").after(
+            '<div class="form-group">' +
+                '<label for="firstname">Firstname</label>' +
+                '<input type="text" class="form-control" id="firstname" name="firstname" />' +
+            '</div>' +
+            '<div class="form-group">' +
+                '<label for="lastname">Lastname</label>' +
+                '<input type="text" class="form-control" id="lastname" name="lastname" />' +
+            '</div>' +
+            '<div class="form-group">' +
+                '<label for="email">Email</label>' +
+                '<input type="email" class="form-control" id="email" name="email" />' +
+            '</div>' +
+            '<div class="form-group">' +
+                '<label for="password">Password</label>' +
+                '<input type="password" class="form-control" id="password" name="password" />' +
+            '</div>'
+        );
+
+        $("form").attr("action", "${ pageContext.request.contextPath }/login?action=register");
+
+        $("#emailField").remove();
+        $("#passField").remove();
+        $("#signUp").remove();
+        $("#submit").text("Register");
+    });
+</script>
 <!-- JavaScript libs are placed at the end of the document so the pages load faster -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
