@@ -14,7 +14,7 @@ USE `officialLeague` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `officialLeague`.`Team` (
   `id` 		INT NOT NULL AUTO_INCREMENT,
-  `name` 	VARCHAR(45) NOT NULL,
+  `name` 	VARCHAR(45) NOT NULL UNIQUE,
   `address` VARCHAR(45) NOT NULL,
   `zip` 	VARCHAR(45) NOT NULL,
   `city` 	VARCHAR(45) NOT NULL,
@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `officialLeague`.`Official` (
   `id` 			INT NOT NULL AUTO_INCREMENT,
   `firstname`	VARCHAR(45) NOT NULL,
   `lastname`	VARCHAR(45) NOT NULL,
-  `email`		VARCHAR(45) NOT NULL,
+  `email`		VARCHAR(45) NOT NULL UNIQUE,
   `password`	VARCHAR(255) NOT NULL,
   `level`		TINYINT NOT NULL,
   `idTeam` 		INT NOT NULL,
