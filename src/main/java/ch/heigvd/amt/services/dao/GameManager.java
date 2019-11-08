@@ -6,10 +6,7 @@ import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -26,11 +23,12 @@ public class GameManager implements GameManagerLocal {
     TeamManagerLocal teamManager;
 
     // Create
-    public boolean create(Game game){
+    @Override
+    public long create(Game game){
         if(game == null)
-            return false;
+            return -1;
 
-        boolean success;
+        long id = -1;
         DateTimeFormatter sqlDateTimeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
         try {
@@ -38,7 +36,7 @@ public class GameManager implements GameManagerLocal {
 
             PreparedStatement statement = conn.prepareStatement("INSERT INTO Game (timestamp, awayId, homeId, refereeId, umpireId, " +
                                                                 "chainJudgeId, lineJudgeId, backJudgeId, sideJudgeId, fieldJudgeId) " +
-                                                                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                                                                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             statement.setObject(1, game.getTimestamp().format(sqlDateTimeFormat));
             statement.setObject(2, game.getAway().getId());
             statement.setObject(3, game.getHome().getId());
@@ -50,19 +48,24 @@ public class GameManager implements GameManagerLocal {
             statement.setObject(9, game.getSideJudge().getId());
             statement.setObject(10, game.getFieldJudge().getId());
 
-            success = statement.execute();
+            statement.executeUpdate();
+
+            ResultSet generatedKeys = statement.getGeneratedKeys();
+            if(generatedKeys.next())
+                id = generatedKeys.getLong(1);
 
             conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
+            return -1;
         }
 
-        return success;
+        return id;
     }
 
     // Read
-    public Game get(long id){
+    @Override
+    public Game getById(long id){
         Game game = null;
 
         try {
@@ -96,6 +99,7 @@ public class GameManager implements GameManagerLocal {
     }
 
     // Update
+    @Override
     public boolean update(Game game){
         if(game == null)
             return false;
@@ -134,6 +138,7 @@ public class GameManager implements GameManagerLocal {
     }
 
     // Delete
+    @Override
     public boolean delete(Game game){
         if(game == null)
             return false;
@@ -158,6 +163,7 @@ public class GameManager implements GameManagerLocal {
         return success;
     }
 
+    @Override
     public List<Game> getAll(){
         List<Game> games = new ArrayList<>();
 

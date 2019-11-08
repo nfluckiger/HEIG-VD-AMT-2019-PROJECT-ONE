@@ -7,7 +7,7 @@ import java.util.List;
 
 @Local
 public interface OfficialManagerLocal {
-    public boolean create(Official official);
+    public long create(Official official);
 
     // Read
     public Official get(long id);

@@ -8,7 +8,7 @@ import java.util.List;
 @Local
 public interface TeamManagerLocal {
 
-    public boolean create(Team team);
+    public long create(Team team);
 
     public Team get(long id);
 

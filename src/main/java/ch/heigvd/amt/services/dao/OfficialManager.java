@@ -6,10 +6,8 @@ import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import javax.swing.plaf.nimbus.State;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,17 +21,17 @@ public class OfficialManager implements OfficialManagerLocal {
     TeamManagerLocal teamManager;
 
     // Create
-    public boolean create(Official official){
+    public long create(Official official){
         if(official == null)
-            return false;
+            return -1;
 
-        boolean success;
+        long id = -1;
 
         try {
             Connection conn = dataSource.getConnection();
 
             PreparedStatement statement = conn.prepareStatement("INSERT INTO Official (firstname, lastname, email, password, level, idTeam) " +
-                                                                "VALUES (?, ?, ?, ?, ?, ?)");
+                                                                "VALUES (?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             statement.setObject(1, official.getFirstname());
             statement.setObject(2, official.getLastname());
             statement.setObject(3, official.getEmail());
@@ -41,15 +39,20 @@ public class OfficialManager implements OfficialManagerLocal {
             statement.setObject(5, official.getLevel());
             statement.setObject(6, official.getTeam().getId());
 
-            success = statement.execute();
+            statement.executeUpdate();
+
+            ResultSet generatedKeys = statement.getGeneratedKeys();
+            if(generatedKeys.next()){
+                id = generatedKeys.getLong(1);;
+            }
 
             conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
+            return -1;
         }
 
-        return success;
+        return id;
     }
 
     // Read

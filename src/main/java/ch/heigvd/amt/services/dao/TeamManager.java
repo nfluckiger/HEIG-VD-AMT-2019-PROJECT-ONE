@@ -6,10 +6,7 @@ import ch.heigvd.amt.models.Team;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,31 +19,35 @@ public class TeamManager implements TeamManagerLocal {
     private DataSource dataSource;
 
     // Create
-    public boolean create(Team team){
+    public long create(Team team){
         if(team == null)
-            return false;
+            return -1;
 
-        boolean success;
+        long id = -1;
 
         try {
             Connection conn = dataSource.getConnection();
 
             PreparedStatement statement = conn.prepareStatement("INSERT INTO Team (name, address, zip, city)" +
-                                                                "VALUES (?, ?, ?, ?)");
+                                                                "VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             statement.setObject(1, team.getName());
             statement.setObject(2, team.getAddress());
             statement.setObject(3, team.getZip());
             statement.setObject(4, team.getCity());
 
-            success = statement.execute();
+            statement.executeUpdate();
+
+            ResultSet generatedKeys = statement.getGeneratedKeys();
+            if(generatedKeys.next())
+                id = generatedKeys.getLong(1);
 
             conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
+            return -1;
         }
 
-        return success;
+        return id;
     }
 
     // Read

@@ -8,9 +8,9 @@ import java.util.List;
 @Local
 public interface GameManagerLocal {
 
-    public boolean create(Game game);
+    public long create(Game game);
 
-    public Game get(long id);
+    public Game getById(long id);
 
     public boolean update(Game game);
 
