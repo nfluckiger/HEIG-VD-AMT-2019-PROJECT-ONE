@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public class Team {
-    private final long id;
+    private long id;
     private String name;
     private String address;
     private String zip;
@@ -12,6 +12,13 @@ public class Team {
 
     public Team(long id, String name, String address, String zip, String city){
         this.id = id;
+        this.name = name;
+        this.address = address;
+        this.zip = zip;
+        this.city = city;
+    }
+
+    public Team(String name, String address, String zip, String city){
         this.name = name;
         this.address = address;
         this.zip = zip;

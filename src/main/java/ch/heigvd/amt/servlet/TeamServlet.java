@@ -1,5 +1,6 @@
 package ch.heigvd.amt.servlet;
 
+import ch.heigvd.amt.models.Team;
 import ch.heigvd.amt.services.dao.TeamManagerLocal;
 
 import javax.ejb.EJB;
@@ -20,5 +21,16 @@ public class TeamServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("teams", teamManager.getAll());
         req.getRequestDispatcher("WEB-INF/views/team.jsp").forward(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        boolean result = teamManager.create(new Team(req.getParameter("name"),
+                                                     req.getParameter("address"),
+                                                     req.getParameter("zip"),
+                                                     req.getParameter("city")));
+
+        req.setAttribute("result", result);
+        doGet(req, resp);
     }
 }
