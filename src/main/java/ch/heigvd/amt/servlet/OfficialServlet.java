@@ -2,6 +2,7 @@ package ch.heigvd.amt.servlet;
 
 import ch.heigvd.amt.models.Official;
 import ch.heigvd.amt.models.Team;
+import ch.heigvd.amt.security.PasswordHashing;
 import ch.heigvd.amt.services.dao.OfficialManagerLocal;
 import ch.heigvd.amt.services.dao.TeamManagerLocal;
 
@@ -30,25 +31,27 @@ public class OfficialServlet extends HttpServlet {
     }
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if(req.getParameter("action").equals("register")) {
-            officialManager.create(new Official(req.getParameter("firstname"),
-                    req.getParameter("lastname"),
-                    req.getParameter("email"),
-                    req.getParameter("password"),
-                    1,                              // New officials start at level 1
-                    teamManager.get(Integer.parseInt(req.getParameter("team")))));
+        String action = req.getParameter("action");
+        HttpSession session = req.getSession();
+        Official user = (Official) session.getAttribute("user");
+        resp.setContentType("text/html;charset=UTF-8");
 
-            resp.sendRedirect("/home");
+        if(user.getLevel() == 3){
+            if(action.equals("create")) {
+                String firstname = req.getParameter("firstname");
+                String lastname = req.getParameter("lastname");
+                String email = req.getParameter("email");
+                String password = req.getParameter("password");
+                int level = Integer.parseInt(req.getParameter("level"));
+                Team team = teamManager.get(Integer.parseInt(req.getParameter("team")));
+                password = PasswordHashing.hashPassword(password);
+                Official newOfficial = new Official(firstname, lastname, email, password, level, team);
+
+                officialManager.create(newOfficial);
+            }
+        }else{
+            System.out.println("Unauthorized access request");
         }
-//        HttpSession session = req.getSession();
-//        Official user = (Official) session.getAttribute("user");
-//
-//        if(user.getLevel() == 3){
 
-//        }else{
-//
-//            System.out.println("Unauthorized access request");
-//
-//        }
     }
 }

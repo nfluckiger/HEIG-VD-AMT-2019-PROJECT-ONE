@@ -1,7 +1,9 @@
 package ch.heigvd.amt.servlet;
 
 import ch.heigvd.amt.models.Official;
+import ch.heigvd.amt.security.PasswordHashing;
 import ch.heigvd.amt.services.dao.OfficialManagerLocal;
+import ch.heigvd.amt.services.dao.TeamManagerLocal;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -18,6 +20,12 @@ public class LoginServlet extends HttpServlet {
 
     @EJB
     private OfficialManagerLocal officialUser;
+
+    @EJB
+    private OfficialManagerLocal officialManager;
+
+    @EJB
+    private TeamManagerLocal teamManager;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -37,7 +45,7 @@ public class LoginServlet extends HttpServlet {
             String email = req.getParameter("email");
             String password = req.getParameter("password");
 
-            //Todo Passe word en clair
+            password = PasswordHashing.hashPassword(password);
 
 //            user = officialUser.connect(email, password);
 //
@@ -50,7 +58,12 @@ public class LoginServlet extends HttpServlet {
 //            }
             System.out.println("login");
         } else if (action.equals("register")) {
-            System.out.println("Register");
+            officialManager.create(new Official(req.getParameter("firstname"),
+                                                req.getParameter("lastname"),
+                                                req.getParameter("email"),
+                                                req.getParameter("password"),
+                                                1,
+                                                teamManager.get(Integer.parseInt(req.getParameter("team")))));
         }
 
         resp.sendRedirect("home");

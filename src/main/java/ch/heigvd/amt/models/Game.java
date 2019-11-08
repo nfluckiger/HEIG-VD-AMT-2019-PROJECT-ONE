@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 @Getter
 public class Game {
-    private final long id;
+    private long id;
     private LocalDateTime timestamp;
     private Team away;
     private Team home;
@@ -20,7 +20,12 @@ public class Game {
 
     public Game(long id, LocalDateTime timestamp, Team away, Team home, Official referee, Official umpire, Official chainJudge,
                 Official lineJudge, Official backJudge, Official sideJudge, Official fieldJudge){
+        this(timestamp, away, home, referee, umpire, chainJudge, lineJudge, backJudge, sideJudge, fieldJudge);
         this.id = id;
+    }
+
+    public Game(LocalDateTime timestamp, Team away, Team home, Official referee, Official umpire, Official chainJudge,
+                Official lineJudge, Official backJudge, Official sideJudge, Official fieldJudge){
         this.timestamp = timestamp;
         this.away = away;
         this.home = home;
