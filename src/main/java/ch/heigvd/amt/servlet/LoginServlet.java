@@ -1,6 +1,7 @@
 package ch.heigvd.amt.servlet;
 
 import ch.heigvd.amt.models.Official;
+import ch.heigvd.amt.security.PasswordHashing;
 import ch.heigvd.amt.services.dao.OfficialManagerLocal;
 
 import javax.ejb.EJB;
@@ -37,7 +38,7 @@ public class LoginServlet extends HttpServlet {
             String email = req.getParameter("email");
             String password = req.getParameter("password");
 
-            //Todo Passe word en clair
+            password = PasswordHashing.hashPassword(password);
 
             user = officialUser.connect(email, password);
 

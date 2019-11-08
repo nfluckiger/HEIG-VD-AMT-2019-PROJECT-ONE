@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public class Official {
-    private final long id;
+    private long id;
     private String firstname;
     private String lastname;
     private String email;
@@ -14,6 +14,16 @@ public class Official {
 
     public Official(long id, String firstname, String lastname, String email, String password, int level, Team team){
         this.id = id;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+        this.password = password;
+        this.level = level;
+        this.team = team;
+    }
+
+    public Official(String firstname, String lastname, String email, String password, int level, Team team){
+
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;

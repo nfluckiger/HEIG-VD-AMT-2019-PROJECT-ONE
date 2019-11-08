@@ -2,6 +2,7 @@ package ch.heigvd.amt.servlet;
 
 import ch.heigvd.amt.models.Official;
 import ch.heigvd.amt.models.Team;
+import ch.heigvd.amt.security.PasswordHashing;
 import ch.heigvd.amt.services.dao.OfficialManagerLocal;
 import ch.heigvd.amt.services.dao.TeamManagerLocal;
 
@@ -19,6 +20,7 @@ public class OfficialServlet extends HttpServlet {
 
     @EJB
     private OfficialManagerLocal officialManager;
+    @EJB
     private TeamManagerLocal teamManager;
 
     @Override
@@ -28,7 +30,6 @@ public class OfficialServlet extends HttpServlet {
     }
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int creationId = 25;
         String action = req.getParameter("action");
         HttpSession session = req.getSession();
         Official user = (Official) session.getAttribute("user");
@@ -42,8 +43,8 @@ public class OfficialServlet extends HttpServlet {
                 String password = req.getParameter("password");
                 int level = Integer.parseInt(req.getParameter("level"));
                 Team team = teamManager.get(Integer.parseInt(req.getParameter("team")));
-
-                Official newOfficial = new Official(creationId, firstname, lastname, email, password, level, team);
+                password = PasswordHashing.hashPassword(password);
+                Official newOfficial = new Official(firstname, lastname, email, password, level, team);
                 officialManager.create(newOfficial);
 
             }
