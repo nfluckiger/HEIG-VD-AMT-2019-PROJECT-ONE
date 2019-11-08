@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(name = "OfficialServlet", urlPatterns = { "/officials" })
-public class OfficialServlet extends HttpServlet {
+@WebServlet(name = "OfficialServlet", urlPatterns = { "/createOfficial" })
+public class OfficialCreationServlet extends HttpServlet {
 
     @EJB
     private OfficialManagerLocal officialManager;
@@ -23,8 +23,7 @@ public class OfficialServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("officials", officialManager.getAll());
-        req.getRequestDispatcher("WEB-INF/views/official.jsp").forward(req, resp);
+        req.getRequestDispatcher("WEB-INF/views/officialCreation.jsp").forward(req, resp);
     }
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
