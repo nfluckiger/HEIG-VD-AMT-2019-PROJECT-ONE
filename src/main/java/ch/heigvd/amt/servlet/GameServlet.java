@@ -53,7 +53,7 @@ public class GameServlet extends HttpServlet {
 
         if(action == null){
             req.setAttribute("error", "No action is specified");
-            req.getRequestDispatcher("WEB-INF/pages/home.jsp").forward(req, resp);
+            displayAllGames(req, resp);
 
             return;
         }
@@ -73,6 +73,14 @@ public class GameServlet extends HttpServlet {
 //            System.out.println("Unauthorized access request");
 //
 //        }
+    }
+
+    private void displayAllGames(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("games", gameManager.getAll());
+        req.setAttribute("officials", officialManager.getAll());
+        req.setAttribute("teams", teamManager.getAll());
+
+        req.getRequestDispatcher("WEB-INF/pages/game.jsp").forward(req, resp);
     }
 
     private void createGame(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -100,7 +108,11 @@ public class GameServlet extends HttpServlet {
                 lineJudge, backJudge, sideJudge, fieldJudge);
         long id = gameManager.create(newGame);
 
-        req.setAttribute("id", id);
+        if(id == -1)
+            req.setAttribute("error", "Unable to create the Game");
+        else
+            req.setAttribute("success", "Game created");
+
         doGet(req, resp);
     }
 
@@ -116,13 +128,5 @@ public class GameServlet extends HttpServlet {
         }
 
         displayAllGames(req, resp);
-    }
-
-    private void displayAllGames(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("games", gameManager.getAll());
-        req.setAttribute("officials", officialManager.getAll());
-        req.setAttribute("teams", teamManager.getAll());
-
-        req.getRequestDispatcher("WEB-INF/pages/game.jsp").forward(req, resp);
     }
 }

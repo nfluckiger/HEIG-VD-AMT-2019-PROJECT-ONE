@@ -3,16 +3,6 @@
 
 <h1>Games</h1>
 
-<c:if test="${ requestScope.id != null }">
-    <c:choose>
-        <c:when test="${ requestScope.id == -1 }">
-            <div class="alert alert-danger" role="alert">Unable to create game</div>
-        </c:when>
-        <c:otherwise>
-            <div class="alert alert-success" role="alert">Game created</div>
-        </c:otherwise>
-    </c:choose>
-</c:if>
 <c:if test="${ requestScope.error != null }">
     <div class="alert alert-danger" role="alert">${ requestScope.error }</div>
 </c:if>
@@ -35,7 +25,7 @@
 <script type="text/javascript">
     $("#create").click(() => {
         $("#create").after(
-            '<form method="post" action="${ pageContext.request.contextPath }/games">' +
+            '<form method="post" action="${ pageContext.request.contextPath }/games?action=create">' +
                 '<div class="top-margin">' +
                     '<label for="date">Date</label>' +
                     '<input type="datetime-local" class="form-control" id="date" name="date" />' +

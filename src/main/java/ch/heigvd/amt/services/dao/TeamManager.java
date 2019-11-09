@@ -105,19 +105,17 @@ public class TeamManager implements TeamManagerLocal {
     }
 
     // Delete
-    public boolean delete(Team team){
-        if(team == null)
-            return false;
+    public boolean delete(long id){;
 
-        boolean success;
+        int nbRowDeleted = 0;
 
         try {
             Connection conn = dataSource.getConnection();
 
             PreparedStatement statement = conn.prepareStatement("DELETE FROM Team WHERE id=?");
-            statement.setObject(1, team.getId());
+            statement.setObject(1, id);
 
-            success = statement.execute();
+            nbRowDeleted = statement.executeUpdate();
 
             conn.close();
         } catch (SQLException e) {
@@ -125,7 +123,7 @@ public class TeamManager implements TeamManagerLocal {
             return false;
         }
 
-        return success;
+        return nbRowDeleted != 0;
     }
 
     public List<Team> getAll(){

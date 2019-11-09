@@ -14,7 +14,7 @@ public interface TeamManagerLocal {
 
     public boolean update(Team team);
 
-    public boolean delete(Team team);
+    public boolean delete(long id);
 
     public List<Team> getAll();
 }

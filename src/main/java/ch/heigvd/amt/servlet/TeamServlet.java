@@ -25,19 +25,63 @@ public class TeamServlet extends HttpServlet {
             req.setAttribute("team", teamManager.getById(Long.parseLong(id)));
             req.getRequestDispatcher("WEB-INF/pages/detail/team.jsp").forward(req, resp);
         } else {
-            req.setAttribute("teams", teamManager.getAll());
-            req.getRequestDispatcher("WEB-INF/pages/team.jsp").forward(req, resp);
+            displayAllTeams(req, resp);
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        long id = teamManager.create(new Team(req.getParameter("name"),
-                                    req.getParameter("address"),
-                                    req.getParameter("zip"),
-                                    req.getParameter("city")));
+        String action = req.getParameter("action");
 
-        req.setAttribute("id", id);
+        if(action == null){
+            req.setAttribute("error", "No action is specified");
+            doGet(req, resp);
+
+            return;
+        }
+
+        switch(action){
+            case "create":
+                createTeam(req, resp);
+                break;
+
+            case "delete":
+                deleteTeam(req, resp);
+                break;
+        }
+    }
+
+    private void displayAllTeams(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("teams", teamManager.getAll());
+        req.getRequestDispatcher("WEB-INF/pages/team.jsp").forward(req, resp);
+    }
+
+    private void createTeam(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        long id = teamManager.create(new Team(req.getParameter("name"),
+                                              req.getParameter("address"),
+                                              req.getParameter("zip"),
+                                              req.getParameter("city")));
+
+        if(id == -1)
+            req.setAttribute("error", "Unable to create the team");
+        else
+            req.setAttribute("success", "Team created");
+
         doGet(req, resp);
+    }
+
+    private void deleteTeam(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String id = req.getParameter("id");
+
+        if(id != null) {
+            boolean success = teamManager.delete(Long.parseLong(id));
+
+            if(success)
+                req.setAttribute("success", "Team deleted");
+            else
+                req.setAttribute("error", "Unable to delete the team");
+        }
+
+        displayAllTeams(req, resp);
     }
 }
