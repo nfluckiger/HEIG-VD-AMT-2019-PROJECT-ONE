@@ -86,6 +86,34 @@ public class OfficialManager implements OfficialManagerLocal {
         return official;
     }
 
+    @Override
+    public List<Official> getAll(){
+        List<Official> officials = new ArrayList<>();
+
+        try {
+            Connection conn = dataSource.getConnection();
+
+            PreparedStatement statement = conn.prepareStatement("SELECT * FROM Official ORDER BY lastname");
+            ResultSet result = statement.executeQuery();
+
+            while(result.next()){
+                officials.add(new Official(result.getInt("id"),
+                        result.getString("firstname"),
+                        result.getString("lastname"),
+                        result.getString("email"),
+                        result.getString("password"),
+                        result.getInt("level"),
+                        teamManager.getById(result.getInt("idTeam"))));
+            }
+
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return officials;
+    }
+
     // Update
     @Override
     public boolean update(Official official){
@@ -169,31 +197,4 @@ public class OfficialManager implements OfficialManagerLocal {
         return user;
     }
 
-    @Override
-    public List<Official> getAll(){
-        List<Official> officials = new ArrayList<>();
-
-        try {
-            Connection conn = dataSource.getConnection();
-
-            PreparedStatement statement = conn.prepareStatement("SELECT * FROM Official ORDER BY lastname");
-            ResultSet result = statement.executeQuery();
-
-            while(result.next()){
-                officials.add(new Official(result.getInt("id"),
-                                           result.getString("firstname"),
-                                           result.getString("lastname"),
-                                           result.getString("email"),
-                                           result.getString("password"),
-                                           result.getInt("level"),
-                                           teamManager.getById(result.getInt("idTeam"))));
-            }
-
-            conn.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return officials;
-    }
 }

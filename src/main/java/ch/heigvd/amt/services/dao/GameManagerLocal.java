@@ -12,10 +12,8 @@ public interface GameManagerLocal {
 
     public Game getById(long id);
 
-    public boolean update(Game game);
+    public List<Game> getAll();
 
     public boolean delete(long id);
-
-    public List<Game> getAll();
 
 }

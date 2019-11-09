@@ -12,9 +12,7 @@ public interface TeamManagerLocal {
 
     public Team getById(long id);
 
-    public boolean update(Team team);
+    public List<Team> getAll();
 
     public boolean delete(long id);
-
-    public List<Team> getAll();
 }

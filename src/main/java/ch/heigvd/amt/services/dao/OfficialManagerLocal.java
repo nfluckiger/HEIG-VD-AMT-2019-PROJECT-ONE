@@ -12,6 +12,8 @@ public interface OfficialManagerLocal {
     // Read
     public Official getById(long id);
 
+    public List<Official> getAll();
+
     // Update
     public boolean update(Official official);
 
@@ -19,6 +21,4 @@ public interface OfficialManagerLocal {
     public boolean delete(long id);
 
     public Official connect(String email, String password);
-
-    public List<Official> getAll();
 }

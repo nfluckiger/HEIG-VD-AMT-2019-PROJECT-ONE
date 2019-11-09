@@ -98,42 +98,36 @@ public class GameManager implements GameManagerLocal {
         return game;
     }
 
-    // Update
     @Override
-    public boolean update(Game game){
-        if(game == null)
-            return false;
-
-        boolean success;
-        DateTimeFormatter sqlDateTimeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    public List<Game> getAll(){
+        List<Game> games = new ArrayList<>();
 
         try {
             Connection conn = dataSource.getConnection();
 
-            PreparedStatement statement = conn.prepareStatement("UPDATE Game SET timestamp=?, idTeamAway=?, idTeamHome=?, idReferee=?, idUmpire=?, " +
-                                                                "idChainJudge=?, idLineJudge=?, idBackJudge=?, idSideJudge=?, idFieldJudge=? " +
-                                                                "WHERE id=?");
-            statement.setObject(1, game.getTimestamp().format(sqlDateTimeFormat));
-            statement.setObject(2, game.getAway().getId());
-            statement.setObject(3, game.getHome().getId());
-            statement.setObject(4, game.getReferee().getId());
-            statement.setObject(5, game.getUmpire().getId());
-            statement.setObject(6, game.getChainJudge().getId());
-            statement.setObject(7, game.getLineJudge().getId());
-            statement.setObject(8, game.getBackJudge().getId());
-            statement.setObject(9, game.getSideJudge().getId());
-            statement.setObject(10, game.getFieldJudge().getId());
-            statement.setObject(11, game.getId());
+            PreparedStatement statement = conn.prepareStatement("SELECT * FROM Game");
+            ResultSet result = statement.executeQuery();
 
-            success = statement.execute();
+            while(result.next()){
+                games.add(new Game(result.getInt("id"),
+                        result.getTimestamp("timestamp").toLocalDateTime(),
+                        teamManager.getById(result.getInt("idTeamAway")),
+                        teamManager.getById(result.getInt("idTeamHome")),
+                        officialManager.getById(result.getInt("idReferee")),
+                        officialManager.getById(result.getInt("idUmpire")),
+                        officialManager.getById(result.getInt("idChainJudge")),
+                        officialManager.getById(result.getInt("idLineJudge")),
+                        officialManager.getById(result.getInt("idBackJudge")),
+                        officialManager.getById(result.getInt("idSideJudge")),
+                        officialManager.getById(result.getInt("idFieldJudge"))));
+            }
 
             conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
         }
 
-        return success;
+        return games;
     }
 
     // Delete
@@ -159,35 +153,4 @@ public class GameManager implements GameManagerLocal {
         return nbRowDeleted != 0;
     }
 
-    @Override
-    public List<Game> getAll(){
-        List<Game> games = new ArrayList<>();
-
-        try {
-            Connection conn = dataSource.getConnection();
-
-            PreparedStatement statement = conn.prepareStatement("SELECT * FROM Game");
-            ResultSet result = statement.executeQuery();
-
-            while(result.next()){
-                games.add(new Game(result.getInt("id"),
-                                   result.getTimestamp("timestamp").toLocalDateTime(),
-                                   teamManager.getById(result.getInt("idTeamAway")),
-                                   teamManager.getById(result.getInt("idTeamHome")),
-                                   officialManager.getById(result.getInt("idReferee")),
-                                   officialManager.getById(result.getInt("idUmpire")),
-                                   officialManager.getById(result.getInt("idChainJudge")),
-                                   officialManager.getById(result.getInt("idLineJudge")),
-                                   officialManager.getById(result.getInt("idBackJudge")),
-                                   officialManager.getById(result.getInt("idSideJudge")),
-                                   officialManager.getById(result.getInt("idFieldJudge"))));
-            }
-
-            conn.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return games;
-    }
 }

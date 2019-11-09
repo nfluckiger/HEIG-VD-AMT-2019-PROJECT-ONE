@@ -75,33 +75,29 @@ public class TeamManager implements TeamManagerLocal {
         return team;
     }
 
-    // Update
-    public boolean update(Team team){
-        if(team == null)
-            return false;
-
-        boolean success;
+    public List<Team> getAll(){
+        List<Team> teams = new ArrayList<>();
 
         try {
             Connection conn = dataSource.getConnection();
 
-            PreparedStatement statement = conn.prepareStatement("UPDATE Team SET name=?, address=?, zip=?, city=? " +
-                                                                "WHERE id=?");
-            statement.setObject(1, team.getName());
-            statement.setObject(2, team.getAddress());
-            statement.setObject(3, team.getZip());
-            statement.setObject(4, team.getCity());
-            statement.setObject(5, team.getId());
+            PreparedStatement statement = conn.prepareStatement("SELECT * FROM Team");
+            ResultSet result = statement.executeQuery();
 
-            success = statement.execute();
+            while(result.next()){
+                teams.add(new Team(result.getInt("id"),
+                        result.getString("name"),
+                        result.getString("address"),
+                        result.getString("zip"),
+                        result.getString("city")));
+            }
 
             conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
         }
 
-        return success;
+        return teams;
     }
 
     // Delete
@@ -124,30 +120,5 @@ public class TeamManager implements TeamManagerLocal {
         }
 
         return nbRowDeleted != 0;
-    }
-
-    public List<Team> getAll(){
-        List<Team> teams = new ArrayList<>();
-
-        try {
-            Connection conn = dataSource.getConnection();
-
-            PreparedStatement statement = conn.prepareStatement("SELECT * FROM Team");
-            ResultSet result = statement.executeQuery();
-
-            while(result.next()){
-                teams.add(new Team(result.getInt("id"),
-                                   result.getString("name"),
-                                   result.getString("address"),
-                                   result.getString("zip"),
-                                   result.getString("city")));
-            }
-
-            conn.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return teams;
     }
 }
