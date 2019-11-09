@@ -14,12 +14,15 @@
     </c:choose>
 </c:if>
 
-<button id="create" type="button" class="btn btn-primary">Add a team</button>
+<button id="create" type="button" class="btn btn-primary" style="margin-bottom: 15px;">Add a team</button>
 <ul class="list-group">
     <c:forEach items="${ requestScope.teams }" var="team">
         <li class="list-group-item"><c:out value="${ team.name }" /></li>
     </c:forEach>
 </ul>
+
+<jsp:include page="include/endBody.jsp" />
+
 <script type="text/javascript">
     $("#create").click(() => {
         $("#create").after(

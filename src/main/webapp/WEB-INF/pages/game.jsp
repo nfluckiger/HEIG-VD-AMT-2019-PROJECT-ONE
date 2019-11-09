@@ -8,4 +8,5 @@
     </c:forEach>
 </ul>
 
+<jsp:include page="include/endBody.jsp" />
 <jsp:include page="include/footer.jsp" />
