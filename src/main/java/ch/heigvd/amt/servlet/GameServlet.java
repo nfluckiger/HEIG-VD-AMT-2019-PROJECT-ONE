@@ -44,12 +44,17 @@ public class GameServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        String action = req.getParameter("action");
+        // TODO : Uncomment to filter the right server side
 //        HttpSession session = req.getSession();
 //        Official user = (Official) session.getAttribute("user");
 //
-//        if(user.getLevel() == 2){
-//            if(action.equals("create")) {
+//        if(user.getLevel() < 3){
+//            req.setAttribute("error", "You do not have the right to do that");
+//            displayAllGames(req, resp);
+//
+//            return;
+//        }
+
         String action = req.getParameter("action");
 
         if(action == null){
@@ -68,12 +73,6 @@ public class GameServlet extends HttpServlet {
                 deleteGame(req, resp);
                 break;
         }
-//            }
-//        }else{
-//
-//            System.out.println("Unauthorized access request");
-//
-//        }
     }
 
     private void displayAllGames(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

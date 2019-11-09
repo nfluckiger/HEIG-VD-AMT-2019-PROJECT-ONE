@@ -1,5 +1,6 @@
 package ch.heigvd.amt.servlet;
 
+import ch.heigvd.amt.models.Official;
 import ch.heigvd.amt.models.Team;
 import ch.heigvd.amt.services.dao.TeamManagerLocal;
 
@@ -9,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(name = "TeamServlet", urlPatterns = { "/teams" })
@@ -32,6 +34,17 @@ public class TeamServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
+
+        // TODO : Uncomment to filter the right server side
+//        HttpSession session = req.getSession();
+//        Official user = (Official) session.getAttribute("user");
+//
+//        if(user.getLevel() < 3){
+//            req.setAttribute("error", "You do not have the right to do that");
+//            displayAllTeams(req, resp);
+//
+//            return;
+//        }
 
         if(action == null){
             req.setAttribute("error", "No action specified");
