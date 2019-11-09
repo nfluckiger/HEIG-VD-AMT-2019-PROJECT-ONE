@@ -2,6 +2,18 @@
 <jsp:include page="include/header.jsp" />
 
 <h1>Team</h1>
+
+<c:if test="${id != null}">
+    <c:choose>
+        <c:when test="${id == -1}">
+            <div class="alert alert-danger" role="alert">Unable to create team</div>
+        </c:when>
+        <c:otherwise>
+            <div class="alert alert-success" role="alert">Team created</div>
+        </c:otherwise>
+    </c:choose>
+</c:if>
+
 <button id="create" type="button" class="btn btn-primary">Add a team</button>
 <ul class="list-group">
     <c:forEach items="${ requestScope.teams }" var="team">
