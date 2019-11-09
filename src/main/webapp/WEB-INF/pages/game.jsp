@@ -3,9 +3,9 @@
 
 <h1>Games</h1>
 
-<c:if test="${id != null}">
+<c:if test="${ requestScope.id != null }">
     <c:choose>
-        <c:when test="${id == -1}">
+        <c:when test="${ requestScope.id == -1 }">
             <div class="alert alert-danger" role="alert">Unable to create game</div>
         </c:when>
         <c:otherwise>
@@ -13,8 +13,11 @@
         </c:otherwise>
     </c:choose>
 </c:if>
-<c:if test="${error != null}">
+<c:if test="${ requestScope.error != null }">
     <div class="alert alert-danger" role="alert">${ requestScope.error }</div>
+</c:if>
+<c:if test="${ requestScope.success != null }">
+    <div class="alert alert-success" role="alert">${ requestScope.success }</div>
 </c:if>
 
 <button id="create" type="button" class="btn btn-primary" style="margin-bottom: 15px;">Add a game</button>

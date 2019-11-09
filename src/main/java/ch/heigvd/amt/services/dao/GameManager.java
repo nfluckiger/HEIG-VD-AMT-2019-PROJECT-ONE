@@ -138,20 +138,17 @@ public class GameManager implements GameManagerLocal {
 
     // Delete
     @Override
-    public boolean delete(Game game){
-        if(game == null)
-            return false;
+    public boolean delete(long id){
+        int nbRowDeleted = 0;
 
-        boolean success;
-
-        Connection conn = null;
+        Connection conn;
         try {
             conn = dataSource.getConnection();
 
             PreparedStatement statement = conn.prepareStatement("DELETE FROM Game WHERE id=?");
-            statement.setObject(1, game.getId());
+            statement.setObject(1, id);
 
-            success = statement.execute();
+            nbRowDeleted = statement.executeUpdate();
 
             conn.close();
         } catch (SQLException e) {
@@ -159,7 +156,7 @@ public class GameManager implements GameManagerLocal {
             return false;
         }
 
-        return success;
+        return nbRowDeleted != 0;
     }
 
     @Override

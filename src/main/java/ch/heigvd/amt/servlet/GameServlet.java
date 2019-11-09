@@ -38,11 +38,7 @@ public class GameServlet extends HttpServlet {
             req.setAttribute("game", gameManager.getById(Long.parseLong(id)));
             req.getRequestDispatcher("WEB-INF/pages/detail/game.jsp").forward(req, resp);
         } else {
-            req.setAttribute("games", gameManager.getAll());
-            req.setAttribute("officials", officialManager.getAll());
-            req.setAttribute("teams", teamManager.getAll());
-
-            req.getRequestDispatcher("WEB-INF/pages/game.jsp").forward(req, resp);
+            displayAllGames(req, resp);
         }
     }
     @Override
@@ -53,37 +49,80 @@ public class GameServlet extends HttpServlet {
 //
 //        if(user.getLevel() == 2){
 //            if(action.equals("create")) {
-        String date = req.getParameter("date");
+        String action = req.getParameter("action");
 
-        if(date.isEmpty()){
-            req.setAttribute("error", "You have to choose a valid date");
-            doGet(req, resp);
+        if(action == null){
+            req.setAttribute("error", "No action is specified");
+            req.getRequestDispatcher("WEB-INF/pages/home.jsp").forward(req, resp);
 
             return;
         }
 
-            LocalDateTime timestamp = LocalDateTime.parse(date);
-            Team away = teamManager.getById(Long.parseLong(req.getParameter("away")));
-            Team home = teamManager.getById(Long.parseLong(req.getParameter("home")));
-            Official referee = officialManager.getById(Long.parseLong(req.getParameter("referee")));
-            Official umpire = officialManager.getById(Long.parseLong(req.getParameter("umpire")));
-            Official chainJudge = officialManager.getById(Long.parseLong(req.getParameter("chainJudge")));
-            Official lineJudge = officialManager.getById(Long.parseLong(req.getParameter("lineJudge")));
-            Official backJudge = officialManager.getById(Long.parseLong(req.getParameter("backJudge")));
-            Official sideJudge= officialManager.getById(Long.parseLong(req.getParameter("sideJudge")));
-            Official fieldJudge = officialManager.getById(Long.parseLong(req.getParameter("fieldJudge")));
+        switch(action){
+            case "create":
+                createGame(req, resp);
+                break;
 
-            Game newGame = new Game(timestamp, away, home, referee, umpire, chainJudge,
-                    lineJudge, backJudge, sideJudge, fieldJudge);
-            long id = gameManager.create(newGame);
-
-            req.setAttribute("id", id);
-            doGet(req, resp);
+            case "delete":
+                deleteGame(req, resp);
+                break;
+        }
 //            }
 //        }else{
 //
 //            System.out.println("Unauthorized access request");
 //
 //        }
+    }
+
+    private void createGame(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String date = req.getParameter("date");
+
+        if (date.isEmpty()) {
+            req.setAttribute("error", "You have to choose a valid date");
+            doGet(req, resp);
+
+            return;
+        }
+
+        LocalDateTime timestamp = LocalDateTime.parse(date);
+        Team away = teamManager.getById(Long.parseLong(req.getParameter("away")));
+        Team home = teamManager.getById(Long.parseLong(req.getParameter("home")));
+        Official referee = officialManager.getById(Long.parseLong(req.getParameter("referee")));
+        Official umpire = officialManager.getById(Long.parseLong(req.getParameter("umpire")));
+        Official chainJudge = officialManager.getById(Long.parseLong(req.getParameter("chainJudge")));
+        Official lineJudge = officialManager.getById(Long.parseLong(req.getParameter("lineJudge")));
+        Official backJudge = officialManager.getById(Long.parseLong(req.getParameter("backJudge")));
+        Official sideJudge = officialManager.getById(Long.parseLong(req.getParameter("sideJudge")));
+        Official fieldJudge = officialManager.getById(Long.parseLong(req.getParameter("fieldJudge")));
+
+        Game newGame = new Game(timestamp, away, home, referee, umpire, chainJudge,
+                lineJudge, backJudge, sideJudge, fieldJudge);
+        long id = gameManager.create(newGame);
+
+        req.setAttribute("id", id);
+        doGet(req, resp);
+    }
+
+    private void deleteGame(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String id = req.getParameter("id");
+        if(id != null) {
+            boolean success = gameManager.delete(Long.parseLong(id));
+            if(success)
+                req.setAttribute("success", "Game deleted");
+            else
+                req.setAttribute("error", "Unable to delete the game");
+
+        }
+
+        displayAllGames(req, resp);
+    }
+
+    private void displayAllGames(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("games", gameManager.getAll());
+        req.setAttribute("officials", officialManager.getAll());
+        req.setAttribute("teams", teamManager.getAll());
+
+        req.getRequestDispatcher("WEB-INF/pages/game.jsp").forward(req, resp);
     }
 }
