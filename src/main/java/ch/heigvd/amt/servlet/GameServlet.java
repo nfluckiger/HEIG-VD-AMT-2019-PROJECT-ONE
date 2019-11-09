@@ -32,11 +32,18 @@ public class GameServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("games", gameManager.getAll());
-        req.setAttribute("officials", officialManager.getAll());
-        req.setAttribute("teams", teamManager.getAll());
+        String id = req.getParameter("id");
 
-        req.getRequestDispatcher("WEB-INF/pages/game.jsp").forward(req, resp);
+        if(id != null) {
+            req.setAttribute("game", gameManager.getById(Long.parseLong(id)));
+            req.getRequestDispatcher("WEB-INF/pages/gameDetail.jsp").forward(req, resp);
+        } else {
+            req.setAttribute("games", gameManager.getAll());
+            req.setAttribute("officials", officialManager.getAll());
+            req.setAttribute("teams", teamManager.getAll());
+
+            req.getRequestDispatcher("WEB-INF/pages/game.jsp").forward(req, resp);
+        }
     }
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

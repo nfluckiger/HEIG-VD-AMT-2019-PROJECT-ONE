@@ -3,7 +3,7 @@
 
 <h1>${ requestScope.team.name }</h1>
 
-<table>
+<table class="table">
     <tr>
         <th>Name</th>
         <td>${ requestScope.team.name }</td>

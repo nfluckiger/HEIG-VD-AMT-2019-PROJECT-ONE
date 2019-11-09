@@ -21,7 +21,9 @@
 
 <ul class="list-group">
     <c:forEach items="${ requestScope.games }" var="game">
-        <li class="list-group-item">${ game.away.name } @ ${ game.home.name }</li>
+        <a href="${ pageContext.request.contextPath }/games?id=${ game.id }">
+            <li class="list-group-item">${ game.away.name } @ ${ game.home.name }</li>
+        </a>
     </c:forEach>
 </ul>
 
