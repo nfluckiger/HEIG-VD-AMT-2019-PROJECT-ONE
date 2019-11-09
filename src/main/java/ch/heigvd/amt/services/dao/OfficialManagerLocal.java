@@ -16,7 +16,7 @@ public interface OfficialManagerLocal {
     public boolean update(Official official);
 
     // Delete
-    public boolean delete(Official official);
+    public boolean delete(long id);
 
     public Official connect(String email, String password);
 

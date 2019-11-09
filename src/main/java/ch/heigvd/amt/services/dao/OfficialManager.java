@@ -20,6 +20,7 @@ public class OfficialManager implements OfficialManagerLocal {
     TeamManagerLocal teamManager;
 
     // Create
+    @Override
     public long create(Official official){
         if(official == null)
             return -1;
@@ -55,6 +56,7 @@ public class OfficialManager implements OfficialManagerLocal {
     }
 
     // Read
+    @Override
     public Official getById(long id){
         Official official = null;
 
@@ -85,6 +87,7 @@ public class OfficialManager implements OfficialManagerLocal {
     }
 
     // Update
+    @Override
     public boolean update(Official official){
         if(official == null)
             return false;
@@ -116,19 +119,17 @@ public class OfficialManager implements OfficialManagerLocal {
     }
 
     // Delete
-    public boolean delete(Official official){
-        if(official == null)
-            return false;
-
-        boolean success;
+    @Override
+    public boolean delete(long id){
+        int nbRowDeleted = 0;
 
         try {
             Connection conn = dataSource.getConnection();
 
             PreparedStatement statement = conn.prepareStatement("DELETE FROM Official WHERE id=?");
-            statement.setObject(1, official.getId());
+            statement.setObject(1, id);
 
-            success = statement.execute();
+            nbRowDeleted = statement.executeUpdate();
 
             conn.close();
         } catch (SQLException e) {
@@ -136,9 +137,10 @@ public class OfficialManager implements OfficialManagerLocal {
             return false;
         }
 
-        return success;
+        return nbRowDeleted != 0;
     }
 
+    @Override
     public Official connect(String email, String password) {
 
         Official user = null;
@@ -167,6 +169,7 @@ public class OfficialManager implements OfficialManagerLocal {
         return user;
     }
 
+    @Override
     public List<Official> getAll(){
         List<Official> officials = new ArrayList<>();
 

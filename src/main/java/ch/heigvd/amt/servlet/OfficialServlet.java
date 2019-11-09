@@ -34,8 +34,7 @@ public class OfficialServlet extends HttpServlet {
 
             req.getRequestDispatcher("WEB-INF/pages/detail/official.jsp").forward(req, resp);
         } else {
-            req.setAttribute("officials", officialManager.getAll());
-            req.getRequestDispatcher("WEB-INF/pages/official.jsp").forward(req, resp);
+            displayAllOfficials(req, resp);
         }
     }
 
@@ -43,25 +42,32 @@ public class OfficialServlet extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
         HttpSession session = req.getSession();
-        Official user = (Official) session.getAttribute("user");
-        resp.setContentType("text/html;charset=UTF-8");
 
-        if(user.getLevel() == 3){
-            if(action.equals("create")) {
-                String firstname = req.getParameter("firstname");
-                String lastname = req.getParameter("lastname");
-                String email = req.getParameter("email");
-                String password = req.getParameter("password");
-                int level = Integer.parseInt(req.getParameter("level"));
-                Team team = teamManager.getById(Integer.parseInt(req.getParameter("team")));
-                password = PasswordHashing.hashPassword(password);
-                Official newOfficial = new Official(firstname, lastname, email, password, level, team);
+        switch(action){
+            case "update":
+                break;
 
-                officialManager.create(newOfficial);
-            }
-        }else{
-            System.out.println("Unauthorized access request");
+            case "delete":
+                deleteOfficial(req, resp);
+                break;
+        }
+    }
+
+    private void displayAllOfficials(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("officials", officialManager.getAll());
+        req.getRequestDispatcher("WEB-INF/pages/official.jsp").forward(req, resp);
+    }
+
+    private void deleteOfficial(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String id = req.getParameter("id");
+
+        if(id != null){
+            if(officialManager.delete(Long.parseLong(id)))
+                req.setAttribute("success", "Official deleted");
+            else
+                req.setAttribute("error", "Unable to delete this official");
         }
 
+        displayAllOfficials(req, resp);
     }
 }

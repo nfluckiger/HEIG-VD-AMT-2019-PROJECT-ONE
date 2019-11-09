@@ -54,5 +54,9 @@
     <button type="submit" class="btn btn-primary" style="margin-bottom: 15px">Update</button>'
 </form>
 
+<form method="post" action="${ pageContext.request.contextPath }/officials?action=delete&id=${ requestScope.official.id }">
+    <button type="submit" class="btn btn-primary" style="margin-bottom: 15px">Delete this official</button>'
+</form>
+
 <jsp:include page="../include/endBody.jsp" />
 <jsp:include page="../include/footer.jsp" />
