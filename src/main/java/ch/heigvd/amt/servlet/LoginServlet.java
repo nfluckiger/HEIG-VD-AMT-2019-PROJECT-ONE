@@ -35,6 +35,7 @@ public class LoginServlet extends HttpServlet {
         if(session != null && action != null && action.equals("logout"))
             session.invalidate();
 
+        req.setAttribute("teams", teamManager.getAll());
         req.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(req, resp);
     }
 
@@ -58,16 +59,27 @@ public class LoginServlet extends HttpServlet {
                 session.setAttribute("user", user);
                 resp.sendRedirect(req.getContextPath() + "/home");
             } else {
-                req.getSession().removeAttribute("user");
-                req.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(req, resp);
+                req.setAttribute("error", "Unable to log in");
+                doGet(req, resp);
             }
         } else if (action.equals("register")) {
-            officialManager.create(new Official(req.getParameter("firstname"),
-                                                req.getParameter("lastname"),
-                                                req.getParameter("email"),
-                                                req.getParameter("password"),
-                                                1,
-                                                teamManager.get(Integer.parseInt(req.getParameter("team")))));
+            user = new Official(req.getParameter("firstname"),
+                                req.getParameter("lastname"),
+                                req.getParameter("emailSignUp"),
+                                PasswordHashing.hashPassword(req.getParameter("passwordSignUp")),
+                          1,
+                                teamManager.get(Integer.parseInt(req.getParameter("team"))));
+
+            long id = officialManager.create(user);
+
+            if(id != -1){
+                user.setId(id);
+                session.setAttribute("user", user);
+                req.getRequestDispatcher("/WEB-INF/pages/home.jsp").forward(req, resp);
+            } else {
+                req.setAttribute("error", "Unable to register");
+                doGet(req, resp);
+            }
         }
     }
 }
