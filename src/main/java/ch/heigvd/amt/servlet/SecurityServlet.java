@@ -20,27 +20,27 @@ import javax.servlet.http.HttpSession;
 @WebFilter(filterName = "SecurityServlet", urlPatterns = "/*")
 public class SecurityServlet implements Filter {
 
-//    private ServletContext context;
-//
-//    @Override
-//    public void init(FilterConfig fConfig) throws ServletException {
-//        this.context = fConfig.getServletContext();
-//    }
-//
-//    @Override
+    private ServletContext context;
+
+    @Override
+    public void init(FilterConfig fConfig) throws ServletException {
+        this.context = fConfig.getServletContext();
+    }
+
+    @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-//        HttpServletRequest req = (HttpServletRequest) request;
-//        HttpServletResponse resp = (HttpServletResponse) response;
-//        HttpSession session = req.getSession(false);
-//
-//        String uri = req.getRequestURI();
-//        this.context.log("Requested Resource::"+uri);
-//
-//        if(!uri.endsWith("login") && (session == null || session.getAttribute("user") == null)){
-//            resp.sendRedirect(req.getContextPath() + "/login");
-//        }else{
-//            // pass the request along the filter chain
+        HttpServletRequest req = (HttpServletRequest) request;
+        HttpServletResponse resp = (HttpServletResponse) response;
+        HttpSession session = req.getSession(false);
+
+        String uri = req.getRequestURI();
+        this.context.log("Requested Resource::"+uri);
+
+        if(!uri.endsWith("login") && (session == null || session.getAttribute("user") == null)){
+            resp.sendRedirect(req.getContextPath() + "/login");
+        } else {
+            // pass the request along the filter chain
             chain.doFilter(request, response);
-//        }
+        }
     }
 }

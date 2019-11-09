@@ -22,9 +22,11 @@
     </tr>
 </table>
 
-<form method="post" action="${ pageContext.request.contextPath }/teams?action=delete&id=${ requestScope.team.id }">
-    <button type="submit" class="btn btn-primary" style="margin-bottom: 15px">Delete this team</button>'
-</form>
+<c:if test="${ sessionScope.user.level == 3}">
+    <form method="post" action="${ pageContext.request.contextPath }/teams?action=delete&id=${ requestScope.team.id }">
+        <button type="submit" class="btn btn-primary" style="margin-bottom: 15px">Delete this team</button>'
+    </form>
+</c:if>
 
 <jsp:include page="../include/endBody.jsp" />
 <jsp:include page="../include/footer.jsp" />

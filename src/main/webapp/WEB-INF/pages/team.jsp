@@ -10,7 +10,10 @@
     <div class="alert alert-success" role="alert">${ requestScope.success }</div>
 </c:if>
 
-<button id="create" type="button" class="btn btn-primary" style="margin-bottom: 15px;">Add a team</button>
+<c:if test="${ sessionScope.user.level == 3}">
+    <button id="create" type="button" class="btn btn-primary" style="margin-bottom: 15px;">Add a team</button>
+</c:if>
+
 <ul class="list-group">
     <c:forEach items="${ requestScope.teams }" var="team">
         <a href="${ pageContext.request.contextPath }/teams?id=${ team.id }">
