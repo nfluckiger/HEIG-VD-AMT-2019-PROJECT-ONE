@@ -19,8 +19,15 @@ public class TeamServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("teams", teamManager.getAll());
-        req.getRequestDispatcher("WEB-INF/pages/team.jsp").forward(req, resp);
+        String id = req.getParameter("id");
+
+        if(id != null) {
+            req.setAttribute("team", teamManager.getById(Long.parseLong(id)));
+            req.getRequestDispatcher("WEB-INF/pages/teamDetail.jsp").forward(req, resp);
+        } else {
+            req.setAttribute("teams", teamManager.getAll());
+            req.getRequestDispatcher("WEB-INF/pages/team.jsp").forward(req, resp);
+        }
     }
 
     @Override

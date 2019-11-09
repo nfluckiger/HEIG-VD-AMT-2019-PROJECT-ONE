@@ -17,7 +17,9 @@
 <button id="create" type="button" class="btn btn-primary" style="margin-bottom: 15px;">Add a team</button>
 <ul class="list-group">
     <c:forEach items="${ requestScope.teams }" var="team">
-        <li class="list-group-item"><c:out value="${ team.name }" /></li>
+        <a href="${ pageContext.request.contextPath }/teams?id=${ team.id }">
+            <li class="list-group-item">${ team.name }</li>
+        </a>
     </c:forEach>
 </ul>
 
