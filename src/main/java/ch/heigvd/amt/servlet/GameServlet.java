@@ -8,7 +8,6 @@ import ch.heigvd.amt.services.dao.OfficialManagerLocal;
 import ch.heigvd.amt.services.dao.TeamManagerLocal;
 
 import javax.ejb.EJB;
-import javax.ejb.Local;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

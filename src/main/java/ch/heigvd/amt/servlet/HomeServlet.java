@@ -1,6 +1,5 @@
 package ch.heigvd.amt.servlet;
 
-import ch.heigvd.amt.models.Official;
 import ch.heigvd.amt.services.dao.OfficialManagerLocal;
 import ch.heigvd.amt.services.dao.TeamManagerLocal;
 

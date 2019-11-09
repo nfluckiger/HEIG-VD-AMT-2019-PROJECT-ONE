@@ -1,6 +1,5 @@
 package ch.heigvd.amt.services.dao;
 
-import ch.heigvd.amt.models.Game;
 import ch.heigvd.amt.models.Team;
 
 import javax.annotation.Resource;
@@ -9,8 +8,6 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
-// TODO : TESTER AVEC statement.executeUpdate
 
 @Stateless
 public class TeamManager implements TeamManagerLocal {
