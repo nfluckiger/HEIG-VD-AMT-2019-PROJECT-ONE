@@ -45,7 +45,7 @@
   </div>
   <hr>
 
-  <div class="row">
+  <div class="row"team>
     <div class="col-lg-4">
       <button class="btn btn-action" id="signUp" type="button">Sign up</button>
     </div>

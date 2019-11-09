@@ -26,8 +26,17 @@ public class OfficialServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("officials", officialManager.getAll());
-        req.getRequestDispatcher("WEB-INF/pages/official.jsp").forward(req, resp);
+        String id = req.getParameter("id");
+
+        if(id != null) {
+            req.setAttribute("official", officialManager.getById(Long.parseLong(id)));
+            req.setAttribute("teams", teamManager.getAll());
+
+            req.getRequestDispatcher("WEB-INF/pages/detail/official.jsp").forward(req, resp);
+        } else {
+            req.setAttribute("officials", officialManager.getAll());
+            req.getRequestDispatcher("WEB-INF/pages/official.jsp").forward(req, resp);
+        }
     }
 
     @Override

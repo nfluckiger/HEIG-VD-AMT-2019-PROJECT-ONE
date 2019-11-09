@@ -36,7 +36,7 @@ public class GameServlet extends HttpServlet {
 
         if(id != null) {
             req.setAttribute("game", gameManager.getById(Long.parseLong(id)));
-            req.getRequestDispatcher("WEB-INF/pages/gameDetail.jsp").forward(req, resp);
+            req.getRequestDispatcher("WEB-INF/pages/detail/game.jsp").forward(req, resp);
         } else {
             req.setAttribute("games", gameManager.getAll());
             req.setAttribute("officials", officialManager.getAll());

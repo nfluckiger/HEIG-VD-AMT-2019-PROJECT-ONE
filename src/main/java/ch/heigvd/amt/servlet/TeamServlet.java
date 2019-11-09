@@ -23,7 +23,7 @@ public class TeamServlet extends HttpServlet {
 
         if(id != null) {
             req.setAttribute("team", teamManager.getById(Long.parseLong(id)));
-            req.getRequestDispatcher("WEB-INF/pages/teamDetail.jsp").forward(req, resp);
+            req.getRequestDispatcher("WEB-INF/pages/detail/team.jsp").forward(req, resp);
         } else {
             req.setAttribute("teams", teamManager.getAll());
             req.getRequestDispatcher("WEB-INF/pages/team.jsp").forward(req, resp);

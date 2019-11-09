@@ -4,7 +4,9 @@
 <h1>Officials</h1>
 <ul class="list-group">
     <c:forEach items="${ requestScope.officials }" var="official">
-        <li class="list-group-item"><c:out value="${ official.firstname } ${ official.lastname }" /></li>
+        <a href="${ pageContext.request.contextPath }/officials?id=${ official.id }">
+            <li class="list-group-item">${ official.firstname } ${ official.lastname }</li>
+        </a>
     </c:forEach>
 </ul>
 

@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:include page="include/header.jsp" />
+<jsp:include page="../include/header.jsp" />
 
 <h1>${ requestScope.team.name }</h1>
 
@@ -26,5 +26,5 @@
     <button type="submit" class="btn btn-primary" style="margin-bottom: 15px">Delete this team</button>'
 </form>
 
-<jsp:include page="include/endBody.jsp" />
-<jsp:include page="include/footer.jsp" />
+<jsp:include page="../include/endBody.jsp" />
+<jsp:include page="../include/footer.jsp" />
