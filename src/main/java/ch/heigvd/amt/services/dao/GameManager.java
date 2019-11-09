@@ -34,8 +34,8 @@ public class GameManager implements GameManagerLocal {
         try {
             Connection conn = dataSource.getConnection();
 
-            PreparedStatement statement = conn.prepareStatement("INSERT INTO Game (timestamp, awayId, homeId, refereeId, umpireId, " +
-                                                                "chainJudgeId, lineJudgeId, backJudgeId, sideJudgeId, fieldJudgeId) " +
+            PreparedStatement statement = conn.prepareStatement("INSERT INTO Game (timestamp, idTeamAway, idTeamHome, idReferee, idUmpire, " +
+                                                                "idChainJudge, idLineJudge, idBackJudge, idSideJudge, idFieldJudge) " +
                                                                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             statement.setObject(1, game.getTimestamp().format(sqlDateTimeFormat));
             statement.setObject(2, game.getAway().getId());
@@ -79,15 +79,15 @@ public class GameManager implements GameManagerLocal {
             if(result.next()){
                 game = new Game(id,
                                 result.getTimestamp("timestamp").toLocalDateTime(),
-                                teamManager.get(result.getInt("idTeamAway")),
-                                teamManager.get(result.getInt("idTeamHome")),
-                                officialManager.get(result.getInt("idReferee")),
-                                officialManager.get(result.getInt("idUmpire")),
-                                officialManager.get(result.getInt("idChainJudge")),
-                                officialManager.get(result.getInt("idLineJudge")),
-                                officialManager.get(result.getInt("idBackJudge")),
-                                officialManager.get(result.getInt("idSideJudge")),
-                                officialManager.get(result.getInt("idFieldJudge")));
+                                teamManager.getById(result.getInt("idTeamAway")),
+                                teamManager.getById(result.getInt("idTeamHome")),
+                                officialManager.getById(result.getInt("idReferee")),
+                                officialManager.getById(result.getInt("idUmpire")),
+                                officialManager.getById(result.getInt("idChainJudge")),
+                                officialManager.getById(result.getInt("idLineJudge")),
+                                officialManager.getById(result.getInt("idBackJudge")),
+                                officialManager.getById(result.getInt("idSideJudge")),
+                                officialManager.getById(result.getInt("idFieldJudge")));
             }
 
             conn.close();
@@ -110,9 +110,8 @@ public class GameManager implements GameManagerLocal {
         try {
             Connection conn = dataSource.getConnection();
 
-            PreparedStatement statement = conn.prepareStatement("UPDATE Game SET timestamp=?, awayId=?, homeId=?, refereeId=?, " +
-                                                                "umpireId=?, chainJudgeId=?, lineJudgeId=?, backJudgeId=?, " +
-                                                                "sideJudgeId=?, fieldJudgeId=? " +
+            PreparedStatement statement = conn.prepareStatement("UPDATE Game SET timestamp=?, idTeamAway=?, idTeamHome=?, idReferee=?, idUmpire=?, " +
+                                                                "idChainJudge=?, idLineJudge=?, idBackJudge=?, idSideJudge=?, idFieldJudge=? " +
                                                                 "WHERE id=?");
             statement.setObject(1, game.getTimestamp().format(sqlDateTimeFormat));
             statement.setObject(2, game.getAway().getId());
@@ -176,15 +175,15 @@ public class GameManager implements GameManagerLocal {
             while(result.next()){
                 games.add(new Game(result.getInt("id"),
                                    result.getTimestamp("timestamp").toLocalDateTime(),
-                                   teamManager.get(result.getInt("idTeamAway")),
-                                   teamManager.get(result.getInt("idTeamHome")),
-                                   officialManager.get(result.getInt("idReferee")),
-                                   officialManager.get(result.getInt("idUmpire")),
-                                   officialManager.get(result.getInt("idChainJudge")),
-                                   officialManager.get(result.getInt("idLineJudge")),
-                                   officialManager.get(result.getInt("idBackJudge")),
-                                   officialManager.get(result.getInt("idSideJudge")),
-                                   officialManager.get(result.getInt("idFieldJudge"))));
+                                   teamManager.getById(result.getInt("idTeamAway")),
+                                   teamManager.getById(result.getInt("idTeamHome")),
+                                   officialManager.getById(result.getInt("idReferee")),
+                                   officialManager.getById(result.getInt("idUmpire")),
+                                   officialManager.getById(result.getInt("idChainJudge")),
+                                   officialManager.getById(result.getInt("idLineJudge")),
+                                   officialManager.getById(result.getInt("idBackJudge")),
+                                   officialManager.getById(result.getInt("idSideJudge")),
+                                   officialManager.getById(result.getInt("idFieldJudge"))));
             }
 
             conn.close();

@@ -43,7 +43,7 @@
                     '<label for="city">City</label>' +
                     '<input type="text" class="form-control" id="city" name="city" />' +
                 '</div>' +
-                '<button type="submit" class="btn btn-primary">Submit</button>' +
+                '<button type="submit" class="btn btn-primary" style="margin-bottom: 15px">Submit</button>' +
             '</form>'
         );
 

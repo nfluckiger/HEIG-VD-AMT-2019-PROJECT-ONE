@@ -10,7 +10,7 @@ public interface OfficialManagerLocal {
     public long create(Official official);
 
     // Read
-    public Official get(long id);
+    public Official getById(long id);
 
     // Update
     public boolean update(Official official);

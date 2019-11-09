@@ -10,7 +10,7 @@ public interface TeamManagerLocal {
 
     public long create(Team team);
 
-    public Team get(long id);
+    public Team getById(long id);
 
     public boolean update(Team team);
 

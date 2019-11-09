@@ -55,7 +55,7 @@ public class OfficialManager implements OfficialManagerLocal {
     }
 
     // Read
-    public Official get(long id){
+    public Official getById(long id){
         Official official = null;
 
         try {
@@ -73,7 +73,7 @@ public class OfficialManager implements OfficialManagerLocal {
                                         result.getString("email"),
                                         result.getString("password"),
                                         result.getInt("level"),
-                                        teamManager.get(result.getInt("idTeam")));
+                                        teamManager.getById(result.getInt("idTeam")));
             }
 
             conn.close();
@@ -157,7 +157,7 @@ public class OfficialManager implements OfficialManagerLocal {
                 int level = rs.getInt("level");
                 int team = rs.getInt("idTeam");
 
-                user = new Official(id, firstname, lastname, emailUser, password, level, teamManager.get(team));
+                user = new Official(id, firstname, lastname, emailUser, password, level, teamManager.getById(team));
             }
             connection.close();
         }catch (SQLException ex){
@@ -173,7 +173,7 @@ public class OfficialManager implements OfficialManagerLocal {
         try {
             Connection conn = dataSource.getConnection();
 
-            PreparedStatement statement = conn.prepareStatement("SELECT * FROM Official");
+            PreparedStatement statement = conn.prepareStatement("SELECT * FROM Official ORDER BY lastname");
             ResultSet result = statement.executeQuery();
 
             while(result.next()){
@@ -183,7 +183,7 @@ public class OfficialManager implements OfficialManagerLocal {
                                            result.getString("email"),
                                            result.getString("password"),
                                            result.getInt("level"),
-                                           teamManager.get(result.getInt("idTeam"))));
+                                           teamManager.getById(result.getInt("idTeam"))));
             }
 
             conn.close();

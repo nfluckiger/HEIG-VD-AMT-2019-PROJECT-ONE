@@ -68,7 +68,7 @@ public class LoginServlet extends HttpServlet {
                                 req.getParameter("emailSignUp"),
                                 PasswordHashing.hashPassword(req.getParameter("passwordSignUp")),
                           1,
-                                teamManager.get(Integer.parseInt(req.getParameter("team"))));
+                                teamManager.getById(Integer.parseInt(req.getParameter("team"))));
 
             long id = officialManager.create(user);
 

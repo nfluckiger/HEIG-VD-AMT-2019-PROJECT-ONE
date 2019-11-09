@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.text.ParseException;
 import java.time.LocalDateTime;
 
 @WebServlet(name = "GameServlet", urlPatterns = { "/games" })
@@ -32,37 +33,50 @@ public class GameServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("games", gameManager.getAll());
+        req.setAttribute("officials", officialManager.getAll());
+        req.setAttribute("teams", teamManager.getAll());
+
         req.getRequestDispatcher("WEB-INF/pages/game.jsp").forward(req, resp);
     }
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String action = req.getParameter("action");
-        HttpSession session = req.getSession();
-        Official user = (Official) session.getAttribute("user");
-        resp.setContentType("text/html;charset=UTF-8");
+//        String action = req.getParameter("action");
+//        HttpSession session = req.getSession();
+//        Official user = (Official) session.getAttribute("user");
+//
+//        if(user.getLevel() == 2){
+//            if(action.equals("create")) {
+        String date = req.getParameter("date");
 
-        if(user.getLevel() == 3){
-            if(action.equals("create")) {
-                LocalDateTime timestamp = LocalDateTime.parse(req.getParameter("date"));
-                Team away = teamManager.get(Integer.parseInt(req.getParameter("away")));
-                Team home = teamManager.get(Integer.parseInt(req.getParameter("home")));
-                Official referee = officialManager.get(Integer.parseInt(req.getParameter("referee")));
-                Official umpire = officialManager.get(Integer.parseInt(req.getParameter("umpire")));
-                Official chainJudge = officialManager.get(Integer.parseInt(req.getParameter("chainJudge")));
-                Official lineJudge = officialManager.get(Integer.parseInt(req.getParameter("lineJudge")));
-                Official backJudge = officialManager.get(Integer.parseInt(req.getParameter("backJudge")));
-                Official sideJudge= officialManager.get(Integer.parseInt(req.getParameter("sideJudge")));
-                Official fieldJudge = officialManager.get(Integer.parseInt(req.getParameter("fieldJudge")));
+        if(date.isEmpty()){
+            req.setAttribute("error", "You have to choose a valid date");
+            doGet(req, resp);
 
-                Game newGame = new Game(timestamp, away, home, referee, umpire, chainJudge,
-                        lineJudge, backJudge, sideJudge, fieldJudge);
-                gameManager.create(newGame);
-
-            }
-        }else{
-
-            System.out.println("Unauthorized access request");
-
+            return;
         }
+
+            LocalDateTime timestamp = LocalDateTime.parse(date);
+            Team away = teamManager.getById(Long.parseLong(req.getParameter("away")));
+            Team home = teamManager.getById(Long.parseLong(req.getParameter("home")));
+            Official referee = officialManager.getById(Long.parseLong(req.getParameter("referee")));
+            Official umpire = officialManager.getById(Long.parseLong(req.getParameter("umpire")));
+            Official chainJudge = officialManager.getById(Long.parseLong(req.getParameter("chainJudge")));
+            Official lineJudge = officialManager.getById(Long.parseLong(req.getParameter("lineJudge")));
+            Official backJudge = officialManager.getById(Long.parseLong(req.getParameter("backJudge")));
+            Official sideJudge= officialManager.getById(Long.parseLong(req.getParameter("sideJudge")));
+            Official fieldJudge = officialManager.getById(Long.parseLong(req.getParameter("fieldJudge")));
+
+            Game newGame = new Game(timestamp, away, home, referee, umpire, chainJudge,
+                    lineJudge, backJudge, sideJudge, fieldJudge);
+            long id = gameManager.create(newGame);
+
+            req.setAttribute("id", id);
+            doGet(req, resp);
+//            }
+//        }else{
+//
+//            System.out.println("Unauthorized access request");
+//
+//        }
     }
 }

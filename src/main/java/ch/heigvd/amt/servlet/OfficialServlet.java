@@ -44,7 +44,7 @@ public class OfficialServlet extends HttpServlet {
                 String email = req.getParameter("email");
                 String password = req.getParameter("password");
                 int level = Integer.parseInt(req.getParameter("level"));
-                Team team = teamManager.get(Integer.parseInt(req.getParameter("team")));
+                Team team = teamManager.getById(Integer.parseInt(req.getParameter("team")));
                 password = PasswordHashing.hashPassword(password);
                 Official newOfficial = new Official(firstname, lastname, email, password, level, team);
 

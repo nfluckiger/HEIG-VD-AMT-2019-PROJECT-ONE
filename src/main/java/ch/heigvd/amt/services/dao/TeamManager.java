@@ -48,7 +48,7 @@ public class TeamManager implements TeamManagerLocal {
     }
 
     // Read
-    public Team get(long id){
+    public Team getById(long id){
         Team team = null;
 
         try {
