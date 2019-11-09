@@ -24,8 +24,8 @@ public class HomeServlet extends HttpServlet {
         req.getRequestDispatcher("/WEB-INF/pages/home.jsp").forward(req, resp);
     }
 
+    // TODO : Vérifier si on utilise cette fonction
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         doGet(req, resp);
     }
 }

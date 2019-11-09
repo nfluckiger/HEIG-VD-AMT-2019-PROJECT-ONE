@@ -41,6 +41,7 @@ public class GameServlet extends HttpServlet {
             displayAllGames(req, resp);
         }
     }
+
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //        String action = req.getParameter("action");
@@ -52,7 +53,7 @@ public class GameServlet extends HttpServlet {
         String action = req.getParameter("action");
 
         if(action == null){
-            req.setAttribute("error", "No action is specified");
+            req.setAttribute("error", "No action specified");
             displayAllGames(req, resp);
 
             return;

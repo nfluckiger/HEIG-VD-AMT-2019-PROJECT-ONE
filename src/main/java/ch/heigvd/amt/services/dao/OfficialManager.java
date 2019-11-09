@@ -69,6 +69,7 @@ public class OfficialManager implements OfficialManagerLocal {
             ResultSet result = statement.executeQuery();
 
             if(result.next()){
+                String test = result.getString("password");
                 official = new Official(id,
                                         result.getString("firstname"),
                                         result.getString("lastname"),
@@ -120,12 +121,12 @@ public class OfficialManager implements OfficialManagerLocal {
         if(official == null)
             return false;
 
-        boolean success;
+        int nbRowEdited = 0;
 
         try {
             Connection conn = dataSource.getConnection();
 
-            PreparedStatement statement = conn.prepareStatement("UPDATE Official SET firstname=?, lastname=?, email=?, password=?, level=?, teamId=? " +
+            PreparedStatement statement = conn.prepareStatement("UPDATE Official SET firstname=?, lastname=?, email=?, password=?, level=?, idTeam=? " +
                                                                 "WHERE id=?");
             statement.setObject(1, official.getFirstname());
             statement.setObject(2, official.getLastname());
@@ -135,7 +136,7 @@ public class OfficialManager implements OfficialManagerLocal {
             statement.setObject(6, official.getTeam().getId());
             statement.setObject(7, official.getId());
 
-            success = statement.execute();
+            nbRowEdited = statement.executeUpdate();
 
             conn.close();
         } catch (SQLException e) {
@@ -143,7 +144,7 @@ public class OfficialManager implements OfficialManagerLocal {
             return false;
         }
 
-        return success;
+        return nbRowEdited != 0;
     }
 
     // Delete

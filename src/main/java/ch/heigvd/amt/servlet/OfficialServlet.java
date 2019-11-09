@@ -41,14 +41,29 @@ public class OfficialServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
-        HttpSession session = req.getSession();
+
+        if(action == null){
+            req.setAttribute("error", "No action specified");
+            displayAllOfficials(req, resp);
+
+            return;
+        }
+
+        String id = req.getParameter("id");
+        if(id == null) {
+            req.setAttribute("error", "No ID specified");
+            displayAllOfficials(req, resp);
+
+            return;
+        }
 
         switch(action){
             case "update":
+                updateOfficial(req, resp, Long.parseLong(id));
                 break;
 
             case "delete":
-                deleteOfficial(req, resp);
+                deleteOfficial(req, resp, Long.parseLong(id));
                 break;
         }
     }
@@ -58,15 +73,32 @@ public class OfficialServlet extends HttpServlet {
         req.getRequestDispatcher("WEB-INF/pages/official.jsp").forward(req, resp);
     }
 
-    private void deleteOfficial(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String id = req.getParameter("id");
+    private void updateOfficial(HttpServletRequest req, HttpServletResponse resp, long id) throws ServletException, IOException {
+        Official official = officialManager.getById(id);
 
-        if(id != null){
-            if(officialManager.delete(Long.parseLong(id)))
+        official.setFirstname(req.getParameter("firstname"));
+        official.setLastname(req.getParameter("lastname"));
+        official.setEmail(req.getParameter("email"));
+        official.setLevel(Integer.parseInt(req.getParameter("level")));
+        official.setTeam(teamManager.getById(Long.parseLong(req.getParameter("team"))));
+
+        String newPassword = req.getParameter("password");
+        if(!newPassword.isEmpty())
+            official.setPassword(PasswordHashing.hashPassword(newPassword));
+
+        if(officialManager.update(official))
+            req.setAttribute("success", "Official updated");
+        else
+            req.setAttribute("error", "Unable to update the official");
+
+        doGet(req, resp);
+    }
+
+    private void deleteOfficial(HttpServletRequest req, HttpServletResponse resp, long id) throws ServletException, IOException {
+            if(officialManager.delete(id))
                 req.setAttribute("success", "Official deleted");
             else
                 req.setAttribute("error", "Unable to delete this official");
-        }
 
         displayAllOfficials(req, resp);
     }

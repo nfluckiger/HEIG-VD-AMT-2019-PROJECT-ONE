@@ -3,6 +3,13 @@
 
 <h1>${ requestScope.official.firstname } ${ requestScope.official.lastname }</h1>
 
+<c:if test="${ requestScope.error != null }">
+    <div class="alert alert-danger" role="alert">${ requestScope.error }</div>
+</c:if>
+<c:if test="${ requestScope.success != null }">
+    <div class="alert alert-success" role="alert">${ requestScope.success }</div>
+</c:if>
+
 <form method="post" action="${ pageContext.request.contextPath }/officials?action=update&id=${ requestScope.official.id }">
     <div class="top-margin">
         <label for="firstname">Firstname</label>

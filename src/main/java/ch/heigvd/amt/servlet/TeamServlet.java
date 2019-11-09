@@ -34,7 +34,7 @@ public class TeamServlet extends HttpServlet {
         String action = req.getParameter("action");
 
         if(action == null){
-            req.setAttribute("error", "No action is specified");
+            req.setAttribute("error", "No action specified");
             doGet(req, resp);
 
             return;
