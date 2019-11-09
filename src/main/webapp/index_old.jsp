@@ -87,7 +87,7 @@
 
 <script type="text/javascript">
     $("#signUp").click(() => {
-        $("#passField").after(
+       $("#passField").after(
             '<div class="form-group">' +
                 '<label for="firstname">Firstname</label>' +
                 '<input type="text" class="form-control" id="firstname" name="firstname" />' +

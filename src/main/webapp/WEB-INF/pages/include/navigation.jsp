@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="navbar navbar-inverse navbar-fixed-top headroom" >
     <div class="container">
         <div class="navbar-header">
@@ -7,9 +8,13 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav pull-right">
-                <li><a href="${ pageContext.request.contextPath }/games">GAAAA</a></li>
+                <li><a href="${ pageContext.request.contextPath }/home">Home</a></li>
+                <li><a href="${ pageContext.request.contextPath }/games">Games</a></li>
                 <li><a href="${ pageContext.request.contextPath }/teams">Teams</a></li>
                 <li><a href="${ pageContext.request.contextPath }/officials">Officials</a></li>
+                <c:if test="${ sessionScope.user != null}">
+                    <li><a href="${ pageContext.request.contextPath }/login?action=logout">Log out</a></li>
+                </c:if>
             </ul>
         </div>
     </div>
