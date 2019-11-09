@@ -32,9 +32,8 @@ public class LoginServlet extends HttpServlet {
         HttpSession session = req.getSession();
         String action = req.getParameter("action");
 
-        if(session != null && action != null && action.equals("logout")){
-            session.removeAttribute("user");
-        }
+        if(session != null && action != null && action.equals("logout"))
+            session.invalidate();
 
         req.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(req, resp);
     }
