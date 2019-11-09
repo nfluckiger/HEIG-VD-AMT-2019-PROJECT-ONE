@@ -59,11 +59,11 @@
                         <form method="post" action="./login?action=login">
                             <div id="emailField" class="top-margin">
                                 <label>Email <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control">
+                                <input type="text" class="form-control" name="email" />
                             </div>
                             <div id="passField" class="top-margin">
                                 <label>Password <span class="text-danger">*</span></label>
-                                <input type="password" class="form-control">
+                                <input type="password" class="form-control" name="password" />
                             </div>
 
                             <hr>

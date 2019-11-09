@@ -146,7 +146,7 @@ public class OfficialManager implements OfficialManagerLocal {
 
         try{
             Connection connection = dataSource.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM user WHERE email=? AND password=?");
+            PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM Official WHERE email=? AND password=?");
             pstmt.setObject(1, email);
             pstmt.setObject(2, password);
             ResultSet rs = pstmt.executeQuery();
@@ -154,9 +154,7 @@ public class OfficialManager implements OfficialManagerLocal {
                 long id = rs.getLong("id");
                 String firstname = rs.getString("firstname");
                 String lastname = rs.getString("lastname");
-                String date = rs.getString("date");
                 String emailUser = rs.getString("email");
-                String passwordUser = rs.getString("password");
                 int level = rs.getInt("level");
                 int team = rs.getInt("idTeam");
 
