@@ -12,8 +12,8 @@ INSERT INTO Team (name,address,zip,city)
 			("Rhinos","Route du Vernay 34","1870","Monthey");
 
 INSERT INTO `Official` (`firstname`,`lastname`,`email`,`password`,`level`,`idTeam`) 
-	VALUES 	("Nathan","Fluckiger","nathan@fluckiger.ch","03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",2,7),
-            ("David","Jaquet","david@jaquet.ch","03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",2,1),    
+	VALUES 	("Nathan","Fluckiger","nathan@fluckiger.ch","03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",3,7),
+            ("David","Jaquet","david@jaquet.ch","03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",3,1),
             ("Fuller","Maddox","non.enim@eratnonummyultricies.co.uk","03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",2,2),
 			("Damian","Monroe","Nulla@consequatdolor.edu","03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",1,6),
 			("Avram","Salinas","aliquam@pedemalesuada.edu","03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",2,2),

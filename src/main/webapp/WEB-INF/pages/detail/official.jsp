@@ -60,7 +60,7 @@
             </select>
         </div>
 <c:if test="${ sessionScope.user.level == 3 || sessionScope.user.id == requestScope.official.id }">
-        <button type="submit" class="btn btn-primary" style="margin-bottom: 15px">Update</button>'
+        <button type="submit" class="btn btn-primary" style="margin-bottom: 15px">Update</button>
     </form>
 </c:if>
 
