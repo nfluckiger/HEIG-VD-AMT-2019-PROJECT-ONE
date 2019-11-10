@@ -1,5 +1,6 @@
 package ch.heigvd.amt.services.dao;
 
+import ch.heigvd.amt.models.Game;
 import ch.heigvd.amt.models.Official;
 
 import javax.ejb.Local;
@@ -13,6 +14,8 @@ public interface OfficialManagerLocal {
     public Official getById(long id);
 
     public List<Official> getAll();
+
+    public List<Game> getMyFiveNextGames(long id);
 
     // Update
     public boolean update(Official official);

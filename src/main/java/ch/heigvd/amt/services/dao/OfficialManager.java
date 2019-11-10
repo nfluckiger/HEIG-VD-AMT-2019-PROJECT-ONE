@@ -1,5 +1,6 @@
 package ch.heigvd.amt.services.dao;
 
+import ch.heigvd.amt.models.Game;
 import ch.heigvd.amt.models.Official;
 
 import javax.annotation.Resource;
@@ -7,6 +8,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.sql.DataSource;
 import java.sql.*;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -113,6 +115,49 @@ public class OfficialManager implements OfficialManagerLocal {
         }
 
         return officials;
+    }
+
+    @Override
+    public List<Game> getMyFiveNextGames(long id){
+        List<Game> nextGames = new ArrayList<>();
+
+        Connection conn = null;
+        try {
+            conn = dataSource.getConnection();
+
+            PreparedStatement statement = conn.prepareStatement("SELECT * FROM `Game` WHERE timestamp >= NOW() AND " +
+                    "(idReferee=? OR idUmpire=? OR idChainJudge=? OR idLineJudge=? " +
+                    "OR idBackJudge=? OR idSideJudge=? OR idFieldJudge=?) LIMIT 5");
+            statement.setObject(1, id);
+            statement.setObject(2, id);
+            statement.setObject(3, id);
+            statement.setObject(4, id);
+            statement.setObject(5, id);
+            statement.setObject(6, id);
+            statement.setObject(7, id);
+
+            ResultSet result = statement.executeQuery();
+
+            while(result.next()){
+                nextGames.add(new Game(result.getLong("id"),
+                                       result.getTimestamp("timestamp").toLocalDateTime(),
+                                       teamManager.getById(result.getLong("idTeamAway")),
+                                       teamManager.getById(result.getLong("idTeamHome")),
+                                       getById(result.getLong("idReferee")),
+                                       getById(result.getLong("idUmpire")),
+                                       getById(result.getLong("idChainJudge")),
+                                       getById(result.getLong("idLineJudge")),
+                                       getById(result.getLong("idBackJudge")),
+                                       getById(result.getLong("idSideJudge")),
+                                       getById(result.getLong("idFieldJudge"))));
+            }
+
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return nextGames;
     }
 
     // Update
