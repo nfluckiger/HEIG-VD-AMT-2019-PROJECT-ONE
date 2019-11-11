@@ -9,4 +9,5 @@
 - Finir les tests des servlets avec Mockito
 - Mettre en place Arquilian
 - Modifier la méthode de load des données en base de donnée
-- 
+- La branche java doc fait planter le programme il faudrait voir pourquoi et la merge a master
+- Pareil pour la branche clean
