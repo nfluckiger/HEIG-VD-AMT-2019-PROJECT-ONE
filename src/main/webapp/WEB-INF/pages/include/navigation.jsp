@@ -13,6 +13,7 @@
                 <li><a href="${ pageContext.request.contextPath }/teams">Teams</a></li>
                 <li><a href="${ pageContext.request.contextPath }/officials">Officials</a></li>
                 <c:if test="${ sessionScope.user != null}">
+                    <li><a href="${ pageContext.request.contextPath }/officials?id=${ sessionScope.user.id }"</li>
                     <li><a href="${ pageContext.request.contextPath }/login?action=logout">Log out</a></li>
                 </c:if>
             </ul>
