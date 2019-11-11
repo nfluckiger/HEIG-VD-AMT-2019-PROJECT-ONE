@@ -17,10 +17,84 @@
 <ul class="list-group">
     <c:forEach items="${ requestScope.games }" var="game">
         <a href="${ pageContext.request.contextPath }/games?id=${ game.id }">
-            <li class="list-group-item">${ game.away.name } @ ${ game.home.name }</li>
+            <li class="list-group-item">${ game.away.name } @ ${ game.home.name }, id = ${ game.id }</li>
         </a>
     </c:forEach>
 </ul>
+
+<!-- Pagination -->
+<nav aria-label="Page navigation" style="text-align: center;">
+    <ul class="pagination">
+        <c:choose>
+            <c:when test="${ requestScope.nbTabs > 6 }">
+                <c:choose>
+                    <%-- first page --%>
+                    <c:when test="${ empty param['page'] || param['page'] == 1 }">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="${ pageContext.request.contextPath }/games">Previous</a>
+                        </li>
+                        <c:forEach var="i" begin="1" end="3">
+                            <li class="page-item"><a class="page-link" href="${ pageContext.request.contextPath }/games?page=${ i }">${ i }</a></li>
+                        </c:forEach>
+                        <li class="page-item"><a class="page-link">...</a></li>
+                        <c:forEach var="i" begin="${ requestScope.nbTabs - 2 }" end="${ requestScope.nbTabs }">
+                            <li class="page-item"><a class="page-link" href="${ pageContext.request.contextPath }/games?page=${ i }">${ i }</a></li>
+                        </c:forEach>
+                        <li class="page-item">
+                            <a class="page-link" href="${ pageContext.request.contextPath }/games?page=2">Next</a>
+                        </li>
+                    </c:when>
+
+                    <%-- last page --%>
+                    <c:when test="${ param['page'] >= requestScope.nbTabs }">
+                        <li class="page-item">
+                            <a class="page-link" href="${ pageContext.request.contextPath }/games?page=${ param['page'] - 1}">Previous</a>
+                        </li>
+                        <c:forEach var="i" begin="1" end="3">
+                            <li class="page-item"><a class="page-link" href="${ pageContext.request.contextPath }/games?page=${ i }">${ i }</a></li>
+                        </c:forEach>
+                        <li class="page-item"><a class="page-link">...</a></li>
+                        <c:forEach var="i" begin="${ requestScope.nbTabs - 2 }" end="${ requestScope.nbTabs }">
+                            <li class="page-item"><a class="page-link" href="${ pageContext.request.contextPath }/games?page=${ i }">${ i }</a></li>
+                        </c:forEach>
+                        <li class="page-item disabled">
+                            <a class="page-link" href="${ pageContext.request.contextPath }/games?page=${ requestScope.nbTabs }">Next</a>
+                        </li>
+                    </c:when>
+
+                    <c:otherwise>
+                        <li class="page-item">
+                            <a class="page-link" href="${ pageContext.request.contextPath }/games?page=${ param['page'] - 1}">Previous</a>
+                        </li>
+                        <c:choose>
+                            <c:when test="${ param['page'] > 3 && param['page'] < requestScope.nbTabs - 2 }">
+                                <li class="page-item"><a class="page-link" href="${ pageContext.request.contextPath }/games">1</a></li>
+                                <li class="page-item"><a class="page-link">...</a></li>
+                                <c:forEach var="i" begin="${ param['page'] - 2 }" end="${ param['page'] + 2 }">
+                                    <li class="page-item"><a class="page-link" href="${ pageContext.request.contextPath }/games?page=${ i }">${ i }</a></li>
+                                </c:forEach>
+                                <li class="page-item"><a class="page-link">...</a></li>
+                                <li class="page-item"><a class="page-link" href="${ pageContext.request.contextPath }/games?page=${ requestScope.nbTabs }">${ requestScope.nbTabs }</a></li>
+                            </c:when>
+                            <c:otherwise>
+                                <c:forEach var="i" begin="1" end="${ param['page'] + 2 }">
+                                    <li class="page-item"><a class="page-link" href="${ pageContext.request.contextPath }/games?page=${ i }">${ i }</a></li>
+                                </c:forEach>
+                                <li class="page-item"><a class="page-link">...</a></li>
+                                <c:forEach var="i" begin="${ requestScope.nbTabs - 2}" end="${ requestScope.nbTabs }">
+                                    <li class="page-item"><a class="page-link" href="${ pageContext.request.contextPath }/games?page=${ i }">${ i }</a></li>
+                                </c:forEach>
+                            </c:otherwise>
+                        </c:choose>
+                        <li class="page-item">
+                            <a class="page-link" href="${ pageContext.request.contextPath }/games?page=${ param['page'] + 1 }">Next</a>
+                        </li>
+                    </c:otherwise>
+                </c:choose>
+            </c:when>
+        </c:choose>
+    </ul>
+</nav>
 
 <jsp:include page="include/endBody.jsp" />
 

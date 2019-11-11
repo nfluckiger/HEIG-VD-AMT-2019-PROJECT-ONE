@@ -76,7 +76,19 @@ public class GameServlet extends HttpServlet {
     }
 
     private void displayAllGames(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("games", gameManager.getAll());
+        String page = req.getParameter("page");
+        int nbGame = 10;
+        int offset;
+
+        if(page == null || page.isEmpty())
+            offset = 0;
+        else
+            offset = (Integer.parseInt(page) - 1) * nbGame;
+
+        int gmNbGames = gameManager.getNbGames();
+        req.setAttribute("nbGames", gmNbGames);
+        req.setAttribute("nbTabs", (int)(Math.ceil(gmNbGames / (double)10)));
+        req.setAttribute("games", gameManager.getAll(offset, nbGame));
         req.setAttribute("officials", officialManager.getAll());
         req.setAttribute("teams", teamManager.getAll());
 
