@@ -19,13 +19,10 @@ import java.io.IOException;
 public class LoginServlet extends HttpServlet {
 
     @EJB
-    private OfficialManagerLocal officialUser;
+    public OfficialManagerLocal officialManager;
 
     @EJB
-    private OfficialManagerLocal officialManager;
-
-    @EJB
-    private TeamManagerLocal teamManager;
+    TeamManagerLocal teamManager;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -53,7 +50,7 @@ public class LoginServlet extends HttpServlet {
             password = PasswordHashing.hashPassword(password);
             System.out.println(password);
 
-            user = officialUser.connect(email, password);
+            user = officialManager.connect(email, password);
 
             if (user != null) {
                 session.setAttribute("user", user);

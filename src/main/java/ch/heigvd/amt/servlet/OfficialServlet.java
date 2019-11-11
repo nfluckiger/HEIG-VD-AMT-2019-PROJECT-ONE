@@ -19,10 +19,10 @@ import java.io.IOException;
 public class OfficialServlet extends HttpServlet {
 
     @EJB
-    private OfficialManagerLocal officialManager;
+    OfficialManagerLocal officialManager;
 
     @EJB
-    private TeamManagerLocal teamManager;
+    TeamManagerLocal teamManager;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

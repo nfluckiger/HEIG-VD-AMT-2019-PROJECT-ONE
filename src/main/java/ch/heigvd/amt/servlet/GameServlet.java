@@ -22,13 +22,13 @@ import java.time.LocalDateTime;
 public class GameServlet extends HttpServlet {
 
     @EJB
-    private GameManagerLocal gameManager;
+    GameManagerLocal gameManager;
 
     @EJB
-    private OfficialManagerLocal officialManager;
+    OfficialManagerLocal officialManager;
 
     @EJB
-    private TeamManagerLocal teamManager;
+    TeamManagerLocal teamManager;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
