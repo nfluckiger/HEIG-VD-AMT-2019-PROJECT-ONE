@@ -25,10 +25,12 @@
             <label for="email">Email</label>
             <input type="email" class="form-control" id="email" name="email" value="${ requestScope.official.email }" />
         </div>
-        <div class="top-margin">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" name="password" placeholder="Leave this field blank to NOT update it"/>
-        </div>
+        <c:if test="${ sessionScope.user.level == 3 || sessionScope.user.id == requestScope.official.id }">
+            <div class="top-margin">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Leave this field blank to NOT update it"/>
+            </div>
+        </c:if>
         <div class="top-margin">
             <label for="team">Team</label>
             <select class="selectpicker" data-live-search="true" name="team" id="team">
@@ -37,28 +39,30 @@
                 </c:forEach>
             </select>
         </div>
-        <div class="top-margin">
-            <label for="level">Level</label>
-            <select class="selectpicker" name="level" id="level">
-                <c:choose>
-                    <c:when test="${ requestScope.official.level == 1}">
-                        <option value="1" selected>1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                    </c:when>
-                    <c:when test="${ requestScope.official.level == 2}">
-                        <option value="1">1</option>
-                        <option value="2" selected>2</option>
-                        <option value="3">3</option>
-                    </c:when>
-                    <c:when test="${ requestScope.official.level == 3}">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3" selected>3</option>
-                    </c:when>
-                </c:choose>
-            </select>
-        </div>
+        <c:if test="${ sessionScope.user.level == 3 }">
+            <div class="top-margin">
+                <label for="level">Level</label>
+                <select class="selectpicker" name="level" id="level">
+                    <c:choose>
+                        <c:when test="${ requestScope.official.level == 1}">
+                            <option value="1" selected>1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </c:when>
+                        <c:when test="${ requestScope.official.level == 2}">
+                            <option value="1">1</option>
+                            <option value="2" selected>2</option>
+                            <option value="3">3</option>
+                        </c:when>
+                        <c:when test="${ requestScope.official.level == 3}">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3" selected>3</option>
+                        </c:when>
+                    </c:choose>
+                </select>
+            </div>
+        </c:if>
 <c:if test="${ sessionScope.user.level == 3 || sessionScope.user.id == requestScope.official.id }">
         <button type="submit" class="btn btn-primary" style="margin-bottom: 15px">Update</button>
     </form>
