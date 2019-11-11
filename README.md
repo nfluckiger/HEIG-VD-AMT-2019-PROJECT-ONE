@@ -28,7 +28,7 @@ Dans cette partie, nous partons du principe que la configuration de WildFly (ain
 
 Ensuite, en utilisant l'application `IntelliJ Ultimate Edition`, nous pouvons créer une nouvelle configuration de la manière suivante :
 
-![Configuration](/documentation/src/configuration.png)
+![Configuration](https://github.com/nfluckiger/HEIG-VD-AMT-2019-PROJECT-ONE/blob/master/documentation/src/photo_2019-11-11_22-59-20.jpg)
 
 Il faut toutefois noter que, dans l'onglet `Deployment`, nous devons sélectionner l'artefact à déployer dans grâce au bouton `+`. L'artifact à déployer est celui se terminant par `exploded`.
 
