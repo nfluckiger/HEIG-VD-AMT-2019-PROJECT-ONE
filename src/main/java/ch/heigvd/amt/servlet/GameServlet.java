@@ -21,6 +21,8 @@ import java.time.LocalDateTime;
 @WebServlet(name = "GameServlet", urlPatterns = { "/games" })
 public class GameServlet extends HttpServlet {
 
+    private final int nbGamesToDisplay = 10;
+
     @EJB
     private GameManagerLocal gameManager;
 
@@ -77,18 +79,18 @@ public class GameServlet extends HttpServlet {
 
     private void displayAllGames(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String page = req.getParameter("page");
-        int nbGame = 10;
+        int gmNbGames = gameManager.getNbGames();
         int offset;
 
-        if(page == null || page.isEmpty())
+
+        if(page == null || page.isEmpty() || Integer.parseInt(page) < 1)
             offset = 0;
         else
-            offset = (Integer.parseInt(page) - 1) * nbGame;
+            offset = Math.min((Integer.parseInt(page) - 1) * nbGamesToDisplay, gmNbGames);
 
-        int gmNbGames = gameManager.getNbGames();
         req.setAttribute("nbGames", gmNbGames);
-        req.setAttribute("nbTabs", (int)(Math.ceil(gmNbGames / (double)10)));
-        req.setAttribute("games", gameManager.getAll(offset, nbGame));
+        req.setAttribute("nbTabs", (int)(Math.ceil(gmNbGames / (double)nbGamesToDisplay)));
+        req.setAttribute("games", gameManager.getAll(offset, nbGamesToDisplay));
         req.setAttribute("officials", officialManager.getAll());
         req.setAttribute("teams", teamManager.getAll());
 
