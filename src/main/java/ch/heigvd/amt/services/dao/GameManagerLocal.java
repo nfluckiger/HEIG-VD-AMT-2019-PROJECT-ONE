@@ -10,9 +10,11 @@ public interface GameManagerLocal {
 
     public long create(Game game);
 
+    public int getNbGames();
+
     public Game getById(long id);
 
-    public List<Game> getAll();
+    public List<Game> getAll(int offset, int nb);
 
     public boolean delete(long id);
 

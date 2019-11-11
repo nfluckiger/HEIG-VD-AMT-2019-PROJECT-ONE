@@ -22,6 +22,107 @@
     </c:forEach>
 </ul>
 
+<!-- Pagination -->
+<c:choose>
+    <c:when test="${ empty param['page']}">
+        <c:set var="currentPage" value="1" scope="page" />
+    </c:when>
+    <c:otherwise>
+        <c:set var="currentPage" value="${ param['page'] }" scope="page" />
+    </c:otherwise>
+</c:choose>
+<nav aria-label="Page navigation" style="text-align: center;">
+    <ul class="pagination">
+        <c:choose>
+            <c:when test="${ requestScope.nbTabs > 6 }">
+                <c:choose>
+                    <%-- in the 3 first pages --%>
+                    <c:when test="${ currentPage <= 3 }">
+                        <li class="page-item <c:if test="${ currentPage == 1}">disabled</c:if>">
+                            <a class="page-link" href="${ pageContext.request.contextPath }/games?page=${ currentPage - 1 }">Prev</a>
+                        </li>
+                        <c:forEach var="i" begin="1" end="${ 5 }">
+                            <li class="page-item">
+                                <a class="page-link <c:if test="${i == currentPage}">selected</c:if>" href="${ pageContext.request.contextPath }/games?page=${ i }">
+                                    ${ i }
+                                </a>
+                            </li>
+                        </c:forEach>
+                        <li class="page-item"><a class="page-link">...</a></li>
+                        <li class="page-item"><a class="page-link" href="${ pageContext.request.contextPath }/games?page=${ requestScope.nbTabs }">${ requestScope.nbTabs }</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="${ pageContext.request.contextPath }/games?page=${ currentPage + 1 }">Next</a>
+                        </li>
+                    </c:when>
+
+                    <%-- in the 3 last pages --%>
+                    <c:when test="${ currentPage > requestScope.nbTabs - 3 }">
+                        <li class="page-item">
+                            <a class="page-link" href="${ pageContext.request.contextPath }/games?page=${ currentPage - 1}">Prev</a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="${ pageContext.request.contextPath }/games?page=1">1</a></li>
+                        <li class="page-item"><a class="page-link">...</a></li>
+                        <c:forEach var="i" begin="${ requestScope.nbTabs - 4 }" end="${ requestScope.nbTabs }">
+                            <li class="page-item">
+                                <a class="page-link <c:if test="${i == currentPage}">selected</c:if>" href="${ pageContext.request.contextPath }/games?page=${ i }">
+                                    ${ i }
+                                </a>
+                            </li>
+                        </c:forEach>
+                        <li class="page-item <c:if test="${ currentPage == requestScope.nbTabs }">disabled</c:if>">
+                            <a class="page-link" href="${ pageContext.request.contextPath }/games?page=${ requestScope.nbTabs }">Next</a>
+                        </li>
+                    </c:when>
+
+                    <c:otherwise>
+                        <li class="page-item">
+                            <a class="page-link" href="${ pageContext.request.contextPath }/games?page=${ currentPage - 1}">Prev</a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="${ pageContext.request.contextPath }/games">1</a></li>
+                        <c:if test="${ currentPage != 4 }">
+                            <li class="page-item"><a class="page-link">...</a></li>
+                        </c:if>
+
+                        <c:forEach var="i" begin="${ currentPage - 2 }" end="${ currentPage + 2 }">
+                            <li class="page-item">
+                                <a class="page-link <c:if test="${i == currentPage}">selected</c:if>" href="${ pageContext.request.contextPath }/games?page=${ i }">
+                                    ${ i }
+                                </a>
+                            </li>
+                        </c:forEach>
+
+                        <c:if test="${ currentPage != requestScope.nbTabs - 3}">
+                            <li class="page-item"><a class="page-link">...</a></li>
+                        </c:if>
+                        <li class="page-item"><a class="page-link" href="${ pageContext.request.contextPath }/games?page=${ requestScope.nbTabs }">${ requestScope.nbTabs }</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="${ pageContext.request.contextPath }/games?page=${ currentPage + 1 }">Next</a>
+                        </li>
+                    </c:otherwise>
+                </c:choose>
+            </c:when>
+
+            <c:otherwise>
+                <li class="page-item <c:if test="${ currentPage == 1 }">disabled</c:if>">
+                    <a class="page-link" href="${ pageContext.request.contextPath }/games?page=${ currentPage - 1}">Prev</a>
+                </li>
+
+                <c:forEach var="i" begin="1" end="${ requestScope.nbTabs }">
+                    <li class="page-item">
+                        <a class="page-link <c:if test="${i == currentPage}">selected</c:if>" href="${ pageContext.request.contextPath }/games?page=${ i }">
+                            ${ i }
+                        </a>
+                    </li>
+                </c:forEach>
+
+                <li class="page-item <c:if test="${ currentPage == requestScope.nbTabs }">disabled</c:if>">
+                    <a class="page-link" href="${ pageContext.request.contextPath }/games?page=${ currentPage + 1 }">Next</a>
+                </li>
+            </c:otherwise>
+        </c:choose>
+    </ul>
+</nav>
+
 <jsp:include page="include/endBody.jsp" />
 
 <script type="text/javascript">

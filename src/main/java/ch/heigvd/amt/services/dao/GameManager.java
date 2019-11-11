@@ -65,6 +65,26 @@ public class GameManager implements GameManagerLocal {
 
     // Read
     @Override
+    public int getNbGames(){
+        int nbGames = 0;
+
+        try {
+            Connection conn = dataSource.getConnection();
+
+            PreparedStatement statement = conn.prepareStatement("SELECT COUNT(*) AS nbGames FROM Game");
+            ResultSet result = statement.executeQuery();
+
+            if(result.next())
+                nbGames = result.getInt("nbGames");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return nbGames;
+    };
+
+    @Override
     public Game getById(long id){
         Game game = null;
 
@@ -99,13 +119,16 @@ public class GameManager implements GameManagerLocal {
     }
 
     @Override
-    public List<Game> getAll(){
+    public List<Game> getAll(int offset, int nb){
         List<Game> games = new ArrayList<>();
 
         try {
             Connection conn = dataSource.getConnection();
 
-            PreparedStatement statement = conn.prepareStatement("SELECT * FROM Game");
+            PreparedStatement statement = conn.prepareStatement("SELECT * FROM Game ORDER BY timestamp DESC LIMIT ?, ?");
+            statement.setObject(1, offset);
+            statement.setObject(2, nb);
+
             ResultSet result = statement.executeQuery();
 
             while(result.next()){

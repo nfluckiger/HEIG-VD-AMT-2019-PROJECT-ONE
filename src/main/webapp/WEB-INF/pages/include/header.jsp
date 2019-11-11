@@ -25,6 +25,13 @@
     <script src="./assets/js/respond.min.js"></script>
     <![endif]-->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <style>
+        /* To be more precise than bootstrap */
+        .pagination>li>a.selected {
+            background-color: royalblue;
+            color: #fff;
+        }
+    </style>
 </head>
 
 <body>
