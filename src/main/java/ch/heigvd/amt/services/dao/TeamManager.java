@@ -15,7 +15,6 @@ public class TeamManager implements TeamManagerLocal {
     @Resource(lookup = "java:/jdbc/officialLeague")
     private DataSource dataSource;
 
-    // Create
     public long create(Team team){
         if(team == null)
             return -1;
@@ -47,7 +46,6 @@ public class TeamManager implements TeamManagerLocal {
         return id;
     }
 
-    // Read
     public Team getById(long id){
         Team team = null;
 
@@ -100,7 +98,6 @@ public class TeamManager implements TeamManagerLocal {
         return teams;
     }
 
-    // Delete
     public boolean delete(long id){;
 
         int nbRowDeleted = 0;

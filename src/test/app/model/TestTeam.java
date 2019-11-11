@@ -6,8 +6,14 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Test of the Team model
+ */
 class TeamTest {
 
+    /**
+     * Create a team. Use the getters in the asserts
+     */
     @Test
     public void itShouldBePossibleToCreateAOfficial() {
         Team testTeam = new Team("AMT", "Sous-un-pont 14", "1450", "Ste-Croix");

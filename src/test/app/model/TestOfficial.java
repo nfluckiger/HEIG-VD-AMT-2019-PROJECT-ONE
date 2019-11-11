@@ -7,8 +7,14 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
+/**
+ * Test of the Official model
+ */
 class OfficialTest {
 
+    /**
+     * Create a team and an official. User the getters in the asserts
+     */
     @Test
     public void itShouldBePossibleToCreateAOfficial() {
         Team testTeam = new Team("AMT", "Sous-un-pont 14", "1450", "Ste-Croix");

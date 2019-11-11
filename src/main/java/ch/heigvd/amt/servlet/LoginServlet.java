@@ -14,7 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-
+/**
+ * Servlet for the sign in/up and the logout of the user
+ */
 @WebServlet(name = "LoginServlet", urlPatterns = { "/login" })
 public class LoginServlet extends HttpServlet {
 
@@ -24,6 +26,11 @@ public class LoginServlet extends HttpServlet {
     @EJB
     TeamManagerLocal teamManager;
 
+    /**
+     * Display the login page and log out the user if needed
+     * @param req   Request HTTP
+     * @param resp  Response HTTP
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
@@ -36,6 +43,12 @@ public class LoginServlet extends HttpServlet {
         req.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(req, resp);
     }
 
+    /**
+     * Log in (and register if needed) the official, the redirect to the home page
+     *
+     * @param req   Request HTTP
+     * @param resp  Response HTTP
+     */
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 

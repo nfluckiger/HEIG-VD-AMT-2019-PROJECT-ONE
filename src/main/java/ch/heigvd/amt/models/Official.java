@@ -3,6 +3,10 @@ package ch.heigvd.amt.models;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Class representing an american football official.
+ * The official belongs to a team
+ */
 @Getter
 @Setter
 public class Official {

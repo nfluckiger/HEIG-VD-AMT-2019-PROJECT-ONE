@@ -22,7 +22,6 @@ public class GameManager implements GameManagerLocal {
     @EJB
     TeamManagerLocal teamManager;
 
-    // Create
     @Override
     public long create(Game game){
         if(game == null)
@@ -63,7 +62,6 @@ public class GameManager implements GameManagerLocal {
         return id;
     }
 
-    // Read
     @Override
     public int getNbGames(){
         int nbGames = 0;
@@ -153,7 +151,6 @@ public class GameManager implements GameManagerLocal {
         return games;
     }
 
-    // Delete
     @Override
     public boolean delete(long id){
         int nbRowDeleted = 0;

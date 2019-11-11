@@ -21,7 +21,6 @@ public class OfficialManager implements OfficialManagerLocal {
     @EJB
     TeamManagerLocal teamManager;
 
-    // Create
     @Override
     public long create(Official official){
         if(official == null)
@@ -57,7 +56,6 @@ public class OfficialManager implements OfficialManagerLocal {
         return id;
     }
 
-    // Read
     @Override
     public Official getById(long id){
         Official official = null;
@@ -160,7 +158,6 @@ public class OfficialManager implements OfficialManagerLocal {
         return nextGames;
     }
 
-    // Update
     @Override
     public boolean update(Official official){
         if(official == null)
@@ -192,7 +189,6 @@ public class OfficialManager implements OfficialManagerLocal {
         return nbRowEdited != 0;
     }
 
-    // Delete
     @Override
     public boolean delete(long id){
         int nbRowDeleted = 0;
@@ -242,5 +238,4 @@ public class OfficialManager implements OfficialManagerLocal {
         }
         return user;
     }
-
 }

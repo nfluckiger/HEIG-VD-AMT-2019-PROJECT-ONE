@@ -15,9 +15,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.text.ParseException;
 import java.time.LocalDateTime;
 
+/**
+ * Servlet to manage the URI starting with /games
+ */
 @WebServlet(name = "GameServlet", urlPatterns = { "/games" })
 public class GameServlet extends HttpServlet {
 
@@ -32,6 +34,12 @@ public class GameServlet extends HttpServlet {
     @EJB
     TeamManagerLocal teamManager;
 
+    /**
+     * Display the games or the detail of a game in function of the parameter id. Get method
+     *
+     * @param req  request HTTP
+     * @param resp response HTTP
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
@@ -44,18 +52,23 @@ public class GameServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Manage the post method for the URI starting with /games
+     *
+     * @param req                   Request HTTP
+     * @param resp                  Response HTTP
+     */
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // TODO : Uncomment to filter the right server side
-//        HttpSession session = req.getSession();
-//        Official user = (Official) session.getAttribute("user");
-//
-//        if(user.getLevel() < 3){
-//            req.setAttribute("error", "You do not have the right to do that");
-//            displayAllGames(req, resp);
-//
-//            return;
-//        }
+        HttpSession session = req.getSession();
+        Official user = (Official) session.getAttribute("user");
+
+        if(user.getLevel() < 3){
+            req.setAttribute("error", "You do not have the right to do that");
+            displayAllGames(req, resp);
+
+            return;
+        }
 
         String action = req.getParameter("action");
 
@@ -77,11 +90,16 @@ public class GameServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Display games in the pages/games.jsp
+     *
+     * @param req       Request HTTP
+     * @param resp      Response HTTP
+     */
     private void displayAllGames(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String page = req.getParameter("page");
         int gmNbGames = gameManager.getNbGames();
         int offset;
-
 
         if(page == null || page.isEmpty() || Integer.parseInt(page) < 1)
             offset = 0;
@@ -97,6 +115,11 @@ public class GameServlet extends HttpServlet {
         req.getRequestDispatcher("WEB-INF/pages/game.jsp").forward(req, resp);
     }
 
+    /**
+     * Call the game manager to store a game in the database
+     * @param req   Request HTTP
+     * @param resp  Response HTTP
+     */
     private void createGame(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String date = req.getParameter("date");
 
@@ -130,6 +153,11 @@ public class GameServlet extends HttpServlet {
         doGet(req, resp);
     }
 
+    /**
+     * Call the game manager to delete a game in the database
+     * @param req   Request HTTP
+     * @param resp  Response HTTP
+     */
     private void deleteGame(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
         if(id != null) {

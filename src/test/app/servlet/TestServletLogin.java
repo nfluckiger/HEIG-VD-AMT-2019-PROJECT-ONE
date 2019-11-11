@@ -23,6 +23,9 @@ import java.sql.SQLException;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+/**
+ * Test the login servlet with mockito
+ */
 @ExtendWith(MockitoExtension.class)
 class TestServletLogin {
     @Mock
@@ -45,6 +48,9 @@ class TestServletLogin {
         servlet.officialManager = usersDAO;
     }
 
+    /**
+     * Test the connect function
+     */
     @Test
     void doPostSouldCallConnectfunction() throws ServletException, IOException {
         useGoodUsername();
@@ -57,6 +63,9 @@ class TestServletLogin {
         verify(usersDAO, atLeastOnce()).connect("nathan@fluckiger.ch", "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4");
     }
 
+    /**
+     * Test the method to log in a user
+     */
     @Test
     void doPostSouldAcceptLogin() throws ServletException, IOException {
         useGoodUsername();
@@ -80,4 +89,4 @@ class TestServletLogin {
         when(request.getSession()).thenReturn(httpSession);
     }
 
-    }
+}

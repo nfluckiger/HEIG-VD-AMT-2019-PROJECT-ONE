@@ -10,8 +10,14 @@ import java.time.LocalDateTime;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
+/**
+ * Test of the Game model
+ */
 class GameTest {
 
+    /**
+     * Create some teams, some officials and some game. Use the getters in the assert
+     */
     @Test
     public void itShouldBePossibleToCreateAGame() {
         Team testTeam = new Team("AMT", "Sous-un-pont 14", "1450", "Ste-Croix");

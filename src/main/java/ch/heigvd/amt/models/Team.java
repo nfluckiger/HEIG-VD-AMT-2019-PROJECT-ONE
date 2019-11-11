@@ -3,6 +3,10 @@ package ch.heigvd.amt.models;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Class representing an american football team.
+ * The address information of the team is the address of the field
+ */
 @Getter
 @Setter
 public class Team {

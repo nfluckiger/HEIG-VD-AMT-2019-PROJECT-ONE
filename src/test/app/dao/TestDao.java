@@ -1,6 +1,5 @@
 package app.dao;
 
-
 import ch.heigvd.amt.models.Game;
 import ch.heigvd.amt.models.Official;
 import ch.heigvd.amt.models.Team;
@@ -12,7 +11,14 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test DAO of all models
+ */
 public class TestDao {
+
+    /**
+     * Create a team and 2 officials get all officials created
+     */
     @Test
     public void itShouldBePossibleToStoreAndRetrieveUsers(){
         OfficialManagerLocal officialManager = new OfficialManager();
@@ -33,28 +39,40 @@ public class TestDao {
         assertEquals(2, officialManager.getAll().size());
     }
 
+    /**
+     * Create a team and an official and get his ID
+     */
     @Test
     public void getUserShouldReturnObjectClones() {
         OfficialManagerLocal officialManager = new OfficialManager();
         TeamManagerLocal teamManager = new TeamManager();
+
         Team testTeam = new Team("AMT", "Sous-un-pont 14", "1450", "Ste-Croix");
         teamManager.create(testTeam);
+
         Official david = new Official("David", "Jaquet", "d@jaquet.ch", "superPassword",1, testTeam);
         long davidid = officialManager.create(david);
         Official davidLoad = officialManager.getById(davidid);
+
         assertTrue(david != davidLoad);
         assertEquals(david, davidLoad);
     }
 
+    /**
+     * Create a team, an official and update the official
+     */
     @Test
     public void itShouldBePossibleToUpdateATeam() {
         OfficialManagerLocal officialManager = new OfficialManager();
         TeamManagerLocal teamManager = new TeamManager();
+
         Team testTeam = new Team("AMT", "Sous-un-pont 14", "1450", "Ste-Croix");
         teamManager.create(testTeam);
+
         Official david = new Official("David", "Jaquet", "d@jaquet.ch", "superPassword",1, testTeam);
         long davidid = officialManager.create(david);
         Official davidLoad = officialManager.getById(davidid);
+
         davidLoad.setEmail("pwnstar@jaquet.ch");
         officialManager.update(davidLoad);
         david = officialManager.getById(davidid);
@@ -62,6 +80,10 @@ public class TestDao {
         assertEquals("pwnstar@jaquet.ch", david.getEmail());
         assertEquals(davidLoad, david);
     }
+
+    /**
+     * Create some teams and get them
+     */
     @Test
     public void itShouldBePossibleToStoreAndRetrieveTeam(){
         TeamManagerLocal teamManager = new TeamManager();
@@ -79,16 +101,24 @@ public class TestDao {
         assertEquals(2, teamManager.getAll().size());
     }
 
+    /**
+     * Create a team and test the getById method of the Team Method
+     */
     @Test
     public void getTeamShouldReturnObjectClones() {
         TeamManagerLocal teamManager = new TeamManager();
+
         Team testTeam = new Team("AMT", "Sous-un-pont 14", "1450", "Ste-Croix");
         long teamid = teamManager.create(testTeam);
         Team testTeamLoad = teamManager.getById(teamid);
+
         assertTrue(testTeam != testTeamLoad);
         assertEquals(testTeam, testTeamLoad);
     }
 
+    /**
+     * Creamte some teams, some officials and some games
+     */
     @Test
     public void itShouldBePossibleToStoreAndRetrieveGames(){
         OfficialManagerLocal officialManager = new OfficialManager();
@@ -129,6 +159,10 @@ public class TestDao {
         assertEquals(2, gameManager.getAll().size());
     }
 
+    /**
+     * Create some teams, some officials, some games and test the getById method
+     * of the Game Manage
+     */
     @Test
     public void getGameShouldReturnObjectClones() {
         OfficialManagerLocal officialManager = new OfficialManager();

@@ -13,12 +13,20 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * Servlet to manage the URI starting with /teams
+ */
 @WebServlet(name = "TeamServlet", urlPatterns = { "/teams" })
 public class TeamServlet extends HttpServlet {
 
     @EJB
     TeamManagerLocal teamManager;
 
+    /**
+     * Manage the get method. Display all the teams or one team depending the ID
+     * @param req   Request HTTP
+     * @param resp  Response HTTP
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
@@ -31,20 +39,24 @@ public class TeamServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Manage the post methods. Create or delete a team
+     * @param req   Request HTTP
+     * @param resp  Response HTTP
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
 
-        // TODO : Uncomment to filter the right server side
-//        HttpSession session = req.getSession();
-//        Official user = (Official) session.getAttribute("user");
-//
-//        if(user.getLevel() < 3){
-//            req.setAttribute("error", "You do not have the right to do that");
-//            displayAllTeams(req, resp);
-//
-//            return;
-//        }
+        HttpSession session = req.getSession();
+        Official user = (Official) session.getAttribute("user");
+
+        if(user.getLevel() < 3){
+            req.setAttribute("error", "You do not have the right to do that");
+            displayAllTeams(req, resp);
+
+            return;
+        }
 
         if(action == null){
             req.setAttribute("error", "No action specified");
@@ -64,11 +76,21 @@ public class TeamServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Display all the teams stored in the database
+     * @param req   Request HTTP
+     * @param resp  Response HTTP
+     */
     private void displayAllTeams(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("teams", teamManager.getAll());
         req.getRequestDispatcher("WEB-INF/pages/team.jsp").forward(req, resp);
     }
 
+    /**
+     * Store a team in the database
+     * @param req   Request HTTP
+     * @param resp  Response HTTP
+     */
     private void createTeam(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         long id = teamManager.create(new Team(req.getParameter("name"),
                                               req.getParameter("address"),
@@ -83,6 +105,11 @@ public class TeamServlet extends HttpServlet {
         doGet(req, resp);
     }
 
+    /**
+     * Delete a team from the database
+     * @param req   Request HTTP
+     * @param resp  Response HTTP
+     */
     private void deleteTeam(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
 

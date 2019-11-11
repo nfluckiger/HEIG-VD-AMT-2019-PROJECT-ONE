@@ -5,6 +5,18 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+/**
+ * Model representing an american football game.
+ * A game is composed of a LocalDateTime, 2 teams and 7 officials
+ * The officials are called :
+ *  - Referee
+ *  - Umpire
+ *  - Chain Judge
+ *  - Line Judge
+ *  - Back Judge
+ *  - Side Judge
+ *  - Field Judge
+ */
 @Getter
 @Setter
 public class Game {
